@@ -1,0 +1,355 @@
+/* ================================
+   Membership Page Styles (Part 1/4)
+   Global + Hero Section
+   ================================ */
+
+/* 🔹 Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* 🔹 Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0d0d0d;
+  color: #e0e0e0;
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1.6;
+}
+
+/* 🔹 Buttons */
+.btn {
+  padding: 0.8rem 1.6rem;
+  border: 2px solid #00ffe7;
+  background: transparent;
+  color: #00ffe7;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.btn:hover {
+  background: #00ffe7;
+  color: #0d0d0d;
+  box-shadow: 0 0 15px #00ffe7;
+}
+
+.btn.neon {
+  background: #00ffe7;
+  color: #0d0d0d;
+}
+
+.btn.outline {
+  background: transparent;
+  color: #00ffe7;
+}
+
+/* ================================
+   Hero Section
+   ================================ */
+.membership-hero {
+  position: relative;
+  height: 100vh;
+  background: url('/assets/membership-hero-bg.jpg') center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.membership-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.membership-hero-content {
+  position: relative;
+  text-align: center;
+  max-width: 800px;
+  padding: 2rem;
+  z-index: 1;
+}
+
+.membership-hero-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 4rem;
+  color: #00ffe7;
+  text-shadow: 0 0 20px #00ffe7;
+  margin-bottom: 1rem;
+}
+
+.membership-hero-text {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  margin-bottom: 2rem;
+}
+
+/* ================================
+   Membership Page Styles (Part 2/4)
+   Plans Grid + Cards
+   ================================ */
+
+.membership-plans {
+  padding: 6rem 2rem;
+  background: rgba(20, 20, 20, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  text-align: center;
+}
+
+.membership-plans h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: #00ffe7;
+  text-shadow: 0 0 15px #00ffe7;
+  margin-bottom: 3rem;
+}
+
+/* 🔹 Grid Layout */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* 🔹 Plan Card */
+.plan-card {
+  background: rgba(15, 15, 15, 0.9);
+  border: 2px solid #00ffe7;
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 231, 0.3);
+}
+
+.plan-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px #00ffe7;
+}
+
+/* 🔹 Plan Title */
+.plan-card h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  color: #00ffe7;
+  margin-bottom: 1rem;
+}
+
+/* 🔹 Price */
+.plan-price {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+}
+
+/* 🔹 Features List */
+.plan-features {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.plan-features li {
+  margin: 0.5rem 0;
+  color: #e0e0e0;
+  font-size: 1rem;
+}
+
+/* 🔹 CTA Button inside Card */
+.plan-card .btn {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+
+/* ================================
+   Membership Page Styles (Part 3/4)
+   Comparison Table + Testimonials
+   ================================ */
+
+/* 🔹 Comparison Table */
+.membership-comparison {
+  padding: 6rem 2rem;
+  background: rgba(25, 25, 25, 0.85);
+  -webkit-backdrop-filter:blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.membership-comparison h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: #00ffe7;
+  text-shadow: 0 0 15px #00ffe7;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(15, 15, 15, 0.9);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid rgba(0, 255, 231, 0.3);
+  color: #e0e0e0;
+}
+
+.comparison-table th {
+  background: rgba(0, 255, 231, 0.1);
+  font-family: 'Anton', sans-serif;
+  font-size: 1.2rem;
+  color: #00ffe7;
+}
+
+.comparison-table tr:hover {
+  background: rgba(0, 255, 231, 0.05);
+}
+
+/* 🔹 Testimonials Section */
+.membership-testimonials {
+  padding: 6rem 2rem;
+  background: rgba(20, 20, 20, 0.85);
+  text-align: center;
+}
+
+.membership-testimonials h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: #00ffe7;
+  text-shadow: 0 0 15px #00ffe7;
+  margin-bottom: 3rem;
+}
+
+/* 🔹 Testimonials Grid */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* 🔹 Testimonial Card */
+.testimonial-card {
+  background: rgba(15, 15, 15, 0.9);
+  border: 2px solid #00ffe7;
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 10px rgba(0, 255, 231, 0.3);
+}
+
+.testimonial-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 0 25px #00ffe7;
+}
+
+.testimonial-card p {
+  font-size: 1rem;
+  color: #e0e0e0;
+  margin-bottom: 1rem;
+}
+
+.testimonial-card h4 {
+  font-size: 1rem;
+  color: #00ffe7;
+  font-weight: bold;
+}
+
+
+/* ================================
+   Membership Page Styles (Part 4/4)
+   FAQ + Final CTA
+   ================================ */
+
+/* 🔹 FAQ Section */
+.membership-faq {
+  padding: 6rem 2rem;
+  background: rgba(25, 25, 25, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+
+.membership-faq h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: #00ffe7;
+  text-shadow: 0 0 15px #00ffe7;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.faq-item {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid rgba(0, 255, 231, 0.3);
+  padding-bottom: 1rem;
+}
+
+.faq-item h3 {
+  font-size: 1.2rem;
+  color: #00ffe7;
+  margin-bottom: 0.5rem;
+}
+
+.faq-item p {
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+/* 🔹 Final CTA Section */
+.membership-cta {
+  position: relative;
+  padding: 6rem 2rem;
+  background: url('/assets/membership-cta-bg.jpg') center/cover no-repeat;
+  text-align: center;
+}
+
+.membership-cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.membership-cta-content {
+  position: relative;
+  z-index: 1;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.membership-cta h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3.5rem;
+  color: #00ffe7;
+  text-shadow: 0 0 20px #00ffe7;
+  margin-bottom: 1.5rem;
+}
+
+.membership-cta p {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+  margin-bottom: 2rem;
+}
+
+.membership-cta .cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.membership-cta .btn {
+  min-width: 180px;
+}
