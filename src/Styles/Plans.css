@@ -21,6 +21,15 @@ body {
   line-height: 1.6;
 }
 
+/* Match About.css palette */
+:root {
+  --accent-neon: #00ffe7;
+  --text-light: #e0e0e0;
+  --text-gray: #d0d0d0;
+}
+
+
+
 /* 🔹 Buttons */
 .btn {
   padding: 0.8rem 1.6rem;
