@@ -211,12 +211,15 @@ function BlogPreviewSection({ blogPosts }) {
 function MembershipCtaSection() {
   return (
     <section className="membership-cta">
-      {/* 🔹 Membership CTA */}
-      <h2>THE IRON IS ALREADY WAITING.</h2>
-      <button className="btn neon">START YOUR CONTRACT</button>
+      <div className="membership-cta-content">
+        {/* 🔹 Membership CTA */}
+        <h2>THE IRON IS ALREADY WAITING.</h2>
+        <button className="btn neon">START YOUR CONTRACT</button>
+      </div>
     </section>
   );
 }
+
 
 function FooterSection() {
   return (
@@ -331,7 +334,6 @@ function Home() {
   return (
     <div className="home">
 
-      <NavBar />
       {/* 🔹 Hero Section */}
       <HeroSection />
 
@@ -355,6 +357,7 @@ function Home() {
 
       {/* 🔹 Membership CTA */}
       <MembershipCtaSection />
+
 
       {/* 🔹 Footer */}
       <FooterSection />

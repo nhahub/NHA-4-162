@@ -16,14 +16,14 @@
 
 body {
   background: #0d0d0d;
-  color: #e0e0e0;
+  color: #ccff00;
   font-family: 'JetBrains Mono', monospace;
   line-height: 1.6;
 }
 
 /* Match About.css palette */
 :root {
-  --accent-neon: #00ffe7;
+  --accent-neon: #ccff00;
   --text-light: #e0e0e0;
   --text-gray: #d0d0d0;
 }
@@ -33,9 +33,9 @@ body {
 /* 🔹 Buttons */
 .btn {
   padding: 0.8rem 1.6rem;
-  border: 2px solid #00ffe7;
+  border: 2px solid #ccff00;
   background: transparent;
-  color: #00ffe7;
+  color: #ccff00;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 700;
   cursor: pointer;
@@ -45,19 +45,19 @@ body {
 }
 
 .btn:hover {
-  background: #00ffe7;
+  background: #ccff00;
   color: #0d0d0d;
-  box-shadow: 0 0 15px #00ffe7;
+  box-shadow: 0 0 15px #ccff00;
 }
 
 .btn.neon {
-  background: #00ffe7;
+  background: #ccff00;
   color: #0d0d0d;
 }
 
 .btn.outline {
   background: transparent;
-  color: #00ffe7;
+  color: #ccff00;
 }
 
 /* ================================
@@ -90,8 +90,8 @@ body {
 .membership-hero-title {
   font-family: 'Anton', sans-serif;
   font-size: 4rem;
-  color: #00ffe7;
-  text-shadow: 0 0 20px #00ffe7;
+  color: #ccff00;
+  text-shadow: 0 0 20px #ccff00;
   margin-bottom: 1rem;
 }
 
@@ -117,8 +117,8 @@ body {
 .membership-plans h2 {
   font-family: 'Anton', sans-serif;
   font-size: 3rem;
-  color: #00ffe7;
-  text-shadow: 0 0 15px #00ffe7;
+  color: #ccff00;
+  text-shadow: 0 0 15px #ccff00;
   margin-bottom: 3rem;
 }
 
@@ -132,7 +132,7 @@ body {
 /* 🔹 Plan Card */
 .plan-card {
   background: rgba(15, 15, 15, 0.9);
-  border: 2px solid #00ffe7;
+  border: 2px solid #ccff00;
   border-radius: 12px;
   padding: 2rem;
   transition: all 0.3s ease;
@@ -141,14 +141,14 @@ body {
 
 .plan-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 0 25px #00ffe7;
+  box-shadow: 0 0 25px #ccff00;
 }
 
 /* 🔹 Plan Title */
 .plan-card h3 {
   font-family: 'Anton', sans-serif;
   font-size: 2rem;
-  color: #00ffe7;
+  color: #ccff00;
   margin-bottom: 1rem;
 }
 
@@ -195,8 +195,8 @@ body {
 .membership-comparison h2 {
   font-family: 'Anton', sans-serif;
   font-size: 3rem;
-  color: #00ffe7;
-  text-shadow: 0 0 15px #00ffe7;
+  color: #ccff00;
+  text-shadow: 0 0 15px #ccff00;
   text-align: center;
   margin-bottom: 3rem;
 }
@@ -221,7 +221,7 @@ body {
   background: rgba(0, 255, 231, 0.1);
   font-family: 'Anton', sans-serif;
   font-size: 1.2rem;
-  color: #00ffe7;
+  color: #ccff00;
 }
 
 .comparison-table tr:hover {
@@ -238,8 +238,8 @@ body {
 .membership-testimonials h2 {
   font-family: 'Anton', sans-serif;
   font-size: 3rem;
-  color: #00ffe7;
-  text-shadow: 0 0 15px #00ffe7;
+  color: #ccff00;
+  text-shadow: 0 0 15px #ccff00;
   margin-bottom: 3rem;
 }
 
@@ -253,7 +253,7 @@ body {
 /* 🔹 Testimonial Card */
 .testimonial-card {
   background: rgba(15, 15, 15, 0.9);
-  border: 2px solid #00ffe7;
+  border: 2px solid #ccff00;
   border-radius: 12px;
   padding: 2rem;
   transition: all 0.3s ease;
@@ -262,7 +262,7 @@ body {
 
 .testimonial-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 0 25px #00ffe7;
+  box-shadow: 0 0 25px #ccff00;
 }
 
 .testimonial-card p {
@@ -273,7 +273,7 @@ body {
 
 .testimonial-card h4 {
   font-size: 1rem;
-  color: #00ffe7;
+  color: #ccff00;
   font-weight: bold;
 }
 
@@ -294,8 +294,8 @@ body {
 .membership-faq h2 {
   font-family: 'Anton', sans-serif;
   font-size: 3rem;
-  color: #00ffe7;
-  text-shadow: 0 0 15px #00ffe7;
+  color: #ccff00;
+  text-shadow: 0 0 15px #ccff00;
   text-align: center;
   margin-bottom: 3rem;
 }
@@ -308,7 +308,7 @@ body {
 
 .faq-item h3 {
   font-size: 1.2rem;
-  color: #00ffe7;
+  color: #ccff00;
   margin-bottom: 0.5rem;
 }
 
@@ -342,8 +342,8 @@ body {
 .membership-cta h2 {
   font-family: 'Anton', sans-serif;
   font-size: 3.5rem;
-  color: #00ffe7;
-  text-shadow: 0 0 20px #00ffe7;
+  color: #ccff00;
+  text-shadow: 0 0 20px #ccff00;
   margin-bottom: 1.5rem;
 }
 

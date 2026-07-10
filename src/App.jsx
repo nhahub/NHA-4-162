@@ -5,9 +5,11 @@ import Plans from "./Pages/Plans.jsx";
 
 function App() {
   return (
-    <div>
+    <>
+      <Home />
+      <About />
       <Plans />
-    </div>
+    </>
   );
 }
 
