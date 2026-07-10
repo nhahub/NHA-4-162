@@ -1,0 +1,429 @@
+/* ----------------------------------------------------
+   ABOUT PAGE STYLES (Part 1/4)
+   Sections: Hero Banner + Our Story
+   Fonts: Anton (headings), JetBrains Mono (body)
+---------------------------------------------------- */
+
+/* 🔹 Hero Banner */
+.about-hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: url('/assets/about-hero-bg.jpg') center/cover no-repeat;
+  position: relative;
+  color: var(--text-light);
+}
+
+.about-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* dark overlay for readability */
+}
+
+.about-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 2rem;
+}
+
+.about-hero-title {
+  font-family: 'Anton', sans-serif;
+  font-size: 5rem;
+  text-transform: uppercase;
+  color: var(--accent-neon);
+  margin-bottom: 1rem;
+}
+
+.about-hero-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  color: var(--text-gray);
+  margin-bottom: 2rem;
+}
+
+/* 🔹 Our Story Section */
+.about-story {
+  padding: 5rem 2rem;
+  background-color: rgba(17, 17, 17, 0.85); /* semi-transparent dark */
+  -webkit-backdrop-filter: blur(4px); /* Safari support */
+  backdrop-filter: blur(4px);
+  text-align: center;
+}
+
+.about-story h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: var(--accent-neon);
+  margin-bottom: 2rem;
+}
+
+.about-story p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  color: var(--text-light);
+  max-width: 800px;
+  margin: 0 auto 2rem auto;
+  line-height: 1.6;
+}
+
+/* ----------------------------------------------------
+   ABOUT PAGE STYLES (Part 2/4)
+   Sections: Philosophy / Values + Facilities
+---------------------------------------------------- */
+
+/* 🔹 Philosophy / Values Section */
+.about-philosophy {
+  padding: 5rem 2rem;
+  background-color: rgba(17, 17, 17, 0.85); /* semi-transparent dark */
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  text-align: center;
+}
+
+.about-philosophy h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: var(--accent-neon);
+  margin-bottom: 2rem;
+}
+
+.values-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.value-card {
+  background-color: rgba(34, 34, 34, 0.8);
+  border: 1px solid rgba(85, 85, 85, 0.6);
+  width: 250px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.value-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.value-card h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.5rem;
+  color: var(--accent-neon);
+  margin-bottom: 1rem;
+}
+
+.value-card p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--text-light);
+}
+
+/* 🔹 Facilities Section */
+.about-facilities {
+  padding: 6rem 2rem;
+  background: url('/assets/facilities-bg.jpg') center/cover no-repeat;
+  position: relative;
+  color: var(--text-light);
+}
+
+.about-facilities::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* overlay for readability */
+}
+
+.facilities-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-facilities h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: var(--accent-neon);
+  margin-bottom: 2rem;
+}
+
+.facilities-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.facility-card {
+  background-color: rgba(17, 17, 17, 0.85);
+  border: 1px solid rgba(51, 51, 51, 0.6);
+  width: 280px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.facility-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.facility-card h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.5rem;
+  color: var(--accent-neon);
+  margin-bottom: 1rem;
+}
+
+.facility-card p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--text-light);
+}
+
+
+/* ----------------------------------------------------
+   ABOUT PAGE STYLES (Part 3/4)
+   Sections: Meet the Coaches + Community / Testimonials
+---------------------------------------------------- */
+
+/* 🔹 Meet the Coaches Section */
+.about-coaches {
+  padding: 6rem 2rem;
+  background-color: rgba(17, 17, 17, 0.85);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  text-align: center;
+}
+
+.about-coaches h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: var(--accent-neon);
+  margin-bottom: 3rem;
+}
+
+.coaches-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.coach-card {
+  background-color: rgba(34, 34, 34, 0.8);
+  border: 1px solid rgba(85, 85, 85, 0.6);
+  width: 260px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.coach-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.coach-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+}
+
+.coach-card h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.4rem;
+  color: var(--accent-neon);
+  margin-bottom: 0.5rem;
+}
+
+.coach-card p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.95rem;
+  color: var(--text-light);
+}
+
+/* 🔹 Community / Testimonials Section */
+.about-community {
+  padding: 6rem 2rem;
+  background: url('/assets/community-bg.jpg') center/cover no-repeat;
+  position: relative;
+  color: var(--text-light);
+}
+
+.about-community::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* overlay for readability */
+}
+
+.community-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.about-community h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: var(--accent-neon);
+  margin-bottom: 3rem;
+}
+
+.testimonials-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.testimonial-card {
+  background-color: rgba(17, 17, 17, 0.8);
+  border: 1px solid rgba(51, 51, 51, 0.6);
+  width: 300px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+
+.testimonial-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.testimonial-card p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.testimonial-card h4 {
+  font-family: 'Anton', sans-serif;
+  font-size: 1.2rem;
+  color: var(--accent-neon);
+}
+
+
+/* ----------------------------------------------------
+   ABOUT PAGE STYLES (Part 4/4)
+   Sections: Achievements / Milestones + CTA / Footer
+---------------------------------------------------- */
+
+/* 🔹 Achievements / Milestones Section */
+.about-achievements {
+  padding: 6rem 2rem;
+  background-color: rgba(17, 17, 17, 0.85);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+  text-align: center;
+}
+
+.about-achievements h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: var(--accent-neon);
+  margin-bottom: 3rem;
+}
+
+.achievements-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.achievement-card {
+  background-color: rgba(34, 34, 34, 0.8);
+  border: 1px solid rgba(85, 85, 85, 0.6);
+  width: 260px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.achievement-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.achievement-card h3 {
+  font-family: 'Anton', sans-serif;
+  font-size: 2rem;
+  color: var(--accent-neon);
+  margin-bottom: 1rem;
+}
+
+.achievement-card p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  color: var(--text-light);
+}
+
+/* 🔹 Call to Action Section */
+.about-cta {
+  padding: 6rem 2rem;
+  background: url('/assets/about-cta-bg.jpg') center/cover no-repeat;
+  position: relative;
+  text-align: center;
+  color: var(--text-light);
+}
+
+.about-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7); /* overlay for readability */
+}
+
+.about-cta-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-cta h2 {
+  font-family: 'Anton', sans-serif;
+  font-size: 3rem;
+  color: var(--accent-neon);
+  margin-bottom: 2rem;
+}
+
+.about-cta p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.2rem;
+  color: var(--text-gray);
+  margin-bottom: 3rem;
+}
+
+.about-cta .btn {
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin: 0 1rem;
+}
+
+/* 🔹 Footer Section */
+.about-footer {
+  padding: 2rem;
+  background-color: #111;
+  border-top: 1px solid #222;
+  text-align: center;
+  color: var(--text-gray);
+}
+
+.about-footer p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+}

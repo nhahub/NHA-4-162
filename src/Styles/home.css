@@ -1,0 +1,638 @@
+/* ----------------------------------------------------
+   (1/4) GLOBAL STYLES + HERO SECTION
+   Fonts: Anton (headings), JetBrains Mono (body)
+---------------------------------------------------- */
+
+/* 🔹 Font Imports */
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* 🔹 Root Variables */
+:root {
+  --bg-dark: #000;
+  --text-light: #fff;
+  --text-gray: #aaa;
+  --accent-neon: #ccff00;
+  --font-heading: 'Anton', sans-serif;
+  --font-body: 'JetBrains Mono', monospace;
+}
+
+/* 🔹 Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* 🔹 Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+p {
+  font-family: var(--font-body);
+  color: var(--text-gray);
+}
+
+/* 🔹 Buttons */
+.btn {
+  padding: 0.8rem 1.6rem;
+  border: 2px solid var(--accent-neon);
+  background: none;
+  color: var(--text-light);
+  font-family: var(--font-body);
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn.neon {
+  background-color: var(--accent-neon);
+  color: var(--bg-dark);
+}
+
+.btn.neon:hover {
+  background-color: var(--text-light);
+  color: var(--bg-dark);
+}
+
+.btn.outline:hover {
+  background-color: var(--accent-neon);
+  color: var(--bg-dark);
+}
+
+/* ----------------------------------------------------
+   HERO SECTION
+---------------------------------------------------- */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+  padding: 2rem;
+}
+
+.hero-subtitle {
+  font-size: 0.9rem;
+  color: var(--accent-neon);
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-size: 5rem;
+  color: var(--text-light);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.hero-text {
+  font-size: 1rem;
+  color: var(--text-gray);
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.hero-highlights {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+
+/* ----------------------------------------------------
+   (2/4) STATS + CLASSES PREVIEW + MEMBERSHIP TEASER
+---------------------------------------------------- */
+
+/* 🔹 Stats Section */
+.stats {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 4rem 2rem;
+  background-color: #111;
+  border-top: 1px solid #222;
+  border-bottom: 1px solid #222;
+}
+
+.stat {
+  text-align: center;
+  margin: 1.5rem;
+  flex: 1 1 200px;
+  transition: transform 0.3s ease;
+}
+
+.stat:hover {
+  transform: translateY(-5px);
+}
+
+.stat h2 {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  color: var(--accent-neon);
+  margin-bottom: 0.5rem;
+}
+
+.stat p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ----------------------------------------------------
+   CLASSES PREVIEW SECTION
+---------------------------------------------------- */
+
+.classes-preview {
+  padding: 5rem 2rem;
+  text-align: center;
+  background-color: var(--bg-dark);
+}
+
+.section-title {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: var(--accent-neon);
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.class-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.class-card {
+  background-color: rgba(17, 17, 17, 0.85); /* dark with 85% opacity */
+  border: 1px solid rgba(51, 51, 51, 0.7);  /* semi-transparent border */
+  width: 280px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(4px);       /* Safari support */
+  backdrop-filter: blur(4px);               /* optional frosted glass effect */
+}
+
+
+.class-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.class-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.class-card p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+.link {
+  display: inline-block;
+  margin-top: 2.5rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--accent-neon);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link:hover {
+  color: var(--text-light);
+}
+
+/* ----------------------------------------------------
+   MEMBERSHIP TEASER SECTION
+---------------------------------------------------- */
+
+.membership-teaser {
+  padding: 5rem 2rem;
+  background-color: #111;
+  text-align: center;
+  border-top: 1px solid #222;
+}
+
+.membership-teaser h2 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.membership-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.membership-card {
+  background-color: var(--bg-dark);
+  border: 2px solid #333;
+  width: 280px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.membership-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.membership-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.membership-card p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+.membership-card .price {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  color: var(--accent-neon);
+  margin-top: 1rem;
+}
+
+.membership-teaser .btn {
+  margin-top: 3rem;
+}
+
+
+/* ----------------------------------------------------
+   (3/4) TESTIMONIALS + SHOP PREVIEW + BLOG/RESOURCES
+---------------------------------------------------- */
+
+/* 🔹 Testimonials Section */
+.testimonials {
+  padding: 5rem 2rem;
+  background-color: #111;
+  text-align: center;
+}
+
+.testimonials h2 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: var(--accent-neon);
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.testimonials-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.testimonial-card {
+  background-color: rgba(17, 17, 17, 0.8); /* dark with transparency */
+  border: 1px solid rgba(51, 51, 51, 0.6); /* semi-transparent border */
+  width: 300px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(4px); /* Safari support */
+  /* Optional frosted glass effect */
+  backdrop-filter: blur(4px);
+  
+}
+
+
+.testimonial-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.testimonial-card p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  margin-bottom: 1rem;
+}
+
+.testimonial-card .author {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  color: var(--text-light);
+  text-transform: uppercase;
+}
+
+/* ----------------------------------------------------
+   SHOP PREVIEW SECTION
+---------------------------------------------------- */
+
+.shop-preview {
+  padding: 5rem 2rem;
+  text-align: center;
+  background-color: var(--bg-dark);
+}
+
+.shop-preview h2 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: var(--accent-neon);
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.shop-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.product-card {
+  background-color: #111;
+  border: 1px solid #333;
+  width: 250px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+}
+
+.product-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
+.product-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--text-light);
+  margin-bottom: 0.5rem;
+}
+
+.product-card p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+.product-card .price {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--accent-neon);
+  margin-top: 0.5rem;
+}
+
+/* ----------------------------------------------------
+   BLOG / RESOURCES SECTION
+---------------------------------------------------- */
+
+.blog-preview {
+  padding: 5rem 2rem;
+  background-color: #111;
+  text-align: center;
+}
+
+.blog-preview h2 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: var(--accent-neon);
+  margin-bottom: 3rem;
+  text-transform: uppercase;
+}
+
+.blog-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+}
+
+.blog-card {
+  background-color: rgba(17, 17, 17, 0.8); /* dark with transparency */
+  border: 1px solid rgba(51, 51, 51, 0.6); /* semi-transparent border */
+  width: 300px;
+  padding: 2rem;
+  transition: all 0.3s ease;
+  -webkit-backdrop-filter: blur(4px); /* Safari support */
+  /* Optional frosted glass effect */
+  backdrop-filter: blur(4px);
+  
+}
+
+
+.blog-card:hover {
+  border-color: var(--accent-neon);
+  transform: translateY(-5px);
+}
+
+.blog-card h3 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+.blog-card p {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-gray);
+}
+
+.blog-card a {
+  display: inline-block;
+  margin-top: 1rem;
+  font-family: var(--font-body);
+  font-weight: 700;
+  color: var(--accent-neon);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.blog-card a:hover {
+  color: var(--text-light);
+}
+
+
+/* ----------------------------------------------------
+   (4/4) MEMBERSHIP CTA + FOOTER + RESPONSIVE RULES
+---------------------------------------------------- */
+
+/* 🔹 Membership CTA */
+.membership-cta {
+  padding: 6rem 2rem;
+  text-align: center;
+  background-color: #111;
+  border-top: 1px solid #222;
+}
+
+.membership-cta h2 {
+  font-family: var(--font-heading);
+  font-size: 2.5rem;
+  color: var(--text-light);
+  margin-bottom: 2rem;
+  text-transform: uppercase;
+}
+
+.membership-cta .btn {
+  font-size: 1.2rem;
+  padding: 1rem 2.5rem;
+  margin-top: 2rem;
+}
+
+/* ----------------------------------------------------
+   FOOTER SECTION
+---------------------------------------------------- */
+
+.footer {
+  background-color: var(--bg-dark);
+  padding: 3rem 2rem;
+  text-align: center;
+  border-top: 1px solid #222;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.footer-links a {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text-gray);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: var(--accent-neon);
+}
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.footer-social a {
+  color: var(--accent-neon);
+  font-size: 1.5rem;
+  transition: color 0.3s ease;
+}
+
+.footer-social a:hover {
+  color: var(--text-light);
+}
+
+.footer p {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  color: var(--text-gray);
+}
+
+/* ----------------------------------------------------
+   RESPONSIVE RULES
+---------------------------------------------------- */
+
+/* Tablets */
+@media (max-width: 992px) {
+  .hero-title {
+    font-size: 3.5rem;
+  }
+
+  .stat h2 {
+    font-size: 2.2rem;
+  }
+
+  .class-grid,
+  .shop-grid,
+  .blog-grid,
+  .membership-options,
+  .testimonials-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .class-card,
+  .product-card,
+  .blog-card,
+  .membership-card,
+  .testimonial-card {
+    width: 90%;
+    max-width: 400px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-text {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+
+  .footer-social {
+    gap: 0.8rem;
+  }
+}

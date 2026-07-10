@@ -1,0 +1,83 @@
+.Nav {
+  background-color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 100px;
+  width: 100%;
+  height: 80px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.Title {
+  font-family: "Anton", sans-serif;
+  text-transform: uppercase;
+  color: white;
+  font-size: 30px;
+  cursor: pointer;
+}
+.Nav-Links {
+  max-width: 60%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.Nav-Link {
+  color: white;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+}
+.Nav-Button {
+  text-transform: uppercase;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 13px;
+  width: 8%;
+  height: 32px;
+  background-color: black;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.468);
+}
+
+.Nav-Link:hover,
+.Nav-Mobile-Link:hover,
+.Nav-Mobile-Button:hover {
+  color: #c3fc2f;
+}
+.Nav-Button:hover {
+  color: #c3fc2f;
+  border-color: #c3fc2f;
+}
+
+.Nav-Mobile {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+}
+.Nav-Mobile-Links {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  padding-left: 24px;
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+}
+.Nav-Mobile-Link {
+  color: white;
+  text-decoration: none;
+  padding-bottom: 12px;
+}
+.Nav-Mobile-Button {
+  color: white;
+  background-color: transparent;
+  border: none;
+  font-family: "JetBrains Mono", monospace;
+  text-transform: uppercase;
+}
+@media screen and (min-width: 576px) and (max-width: 992px) {
+}
