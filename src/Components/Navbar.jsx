@@ -1,40 +1,78 @@
 import { useState } from "react";
-import '../Styles/Nav.css'
+import { NavLink } from "react-router-dom";
+import { Button } from "../App";
 
-export function NavBar() {
+export function NavBar({ logInDetails, setLogInDetails }) {
   const [menuIsOpen, setMenuIsOpen] = useState(false);
+  async function handleLogOut() {
+    try {
+      const response = await fetch(
+        "https://gemdashboard-production.up.railway.app/api/logout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${logInDetails.token}`,
+          },
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error(data.message);
+        return;
+      }
+
+      setLogInDetails({
+        isLoggedIn: false,
+        loggedUserName: "",
+        token: "",
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
-      <div className="Nav d-none d-md-flex">
-        <span className="Title">Iron Reign</span>
+      <div className="Nav d-none d-md-flex container-fluid">
+        <span className="Title">GemFit</span>
         <div className="Nav-Links gap-md-3">
-          <a href="" className="Nav-Link">
+          <NavLink to={""} className="Nav-Link">
+            Home
+          </NavLink>
+          <NavLink to={"about"} className="Nav-Link">
             About
-          </a>
-          <a href="" className="Nav-Link">
-            Classes
-          </a>
-          <a href="" className="Nav-Link">
-            Trainers
-          </a>
-          <a href="" className="Nav-Link">
+          </NavLink>
+          <NavLink className="Nav-Link">Classes</NavLink>
+          <NavLink to={"memberships"} className="Nav-Link">
             Membership
-          </a>
-          <a href="" className="Nav-Link">
+          </NavLink>
+          <NavLink to={"shop"} className="Nav-Link">
             Shop
-          </a>
-          <a href="" className="Nav-Link">
+          </NavLink>
+          <NavLink to={"journal"} className="Nav-Link">
             Journal
-          </a>
-          <a href="" className="Nav-Link">
+          </NavLink>
+          <NavLink to={"contact"} className="Nav-Link">
             Contact
-          </a>
+          </NavLink>
         </div>
-        <button className="Nav-Button">Sign in</button>
+
+        {logInDetails.isLoggedIn ? (
+          <div>
+            <Button>{logInDetails.loggedUserName}</Button>
+            <Button onClick={() => handleLogOut()}>sign out</Button>
+          </div>
+        ) : (
+          <NavLink to={"signin"} className="Nav-Button">
+            Sign in
+          </NavLink>
+        )}
       </div>
-      <div className="d-md-none">
+      <div className="d-md-none Mobile-Sticky">
         <div className="Nav-Mobile d-md-none ">
-          <span className="Title">Iron Reign</span>
+          <span className="Title">GemFit</span>
           <button
             onClick={() => setMenuIsOpen(!menuIsOpen)}
             className="Nav-Mobile-Button"
@@ -43,28 +81,77 @@ export function NavBar() {
           </button>
         </div>
         <div className={`Nav-Mobile-Links ${menuIsOpen ? "d-flex" : "d-none"}`}>
-          <a href="" className="Nav-Mobile-Link">
+          <NavLink
+            to={""}
+            className="Nav-Mobile-Link"
+            onClick={() => setMenuIsOpen(false)}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to={"about"}
+            className="Nav-Mobile-Link"
+            onClick={() => setMenuIsOpen(false)}
+          >
             About
-          </a>
-          <a href="" className="Nav-Mobile-Link">
+          </NavLink>
+          <NavLink
+            className="Nav-Mobile-Link"
+            onClick={() => setMenuIsOpen(false)}
+          >
             Classes
-          </a>
-          <a href="" className="Nav-Mobile-Link">
-            Trainers
-          </a>
-          <a href="" className="Nav-Mobile-Link">
+          </NavLink>
+          <NavLink
+            to={"memberships"}
+            className="Nav-Mobile-Link"
+            onClick={() => setMenuIsOpen(false)}
+          >
             Membership
-          </a>
-          <a href="" className="Nav-Mobile-Link">
+          </NavLink>
+          <NavLink
+            to={"shop"}
+            className="Nav-Mobile-Link"
+            onClick={() => setMenuIsOpen(false)}
+          >
             Shop
-          </a>
-          <a href="" className="Nav-Mobile-Link">
+          </NavLink>
+          <NavLink
+            to={"journal"}
+            className="Nav-Mobile-Link"
+            onClick={() => setMenuIsOpen(false)}
+          >
             Journal
-          </a>
-          <a href="" className="Nav-Mobile-Link">
+          </NavLink>
+          <NavLink
+            to={"contact"}
+            className="Nav-Mobile-Link"
+            onClick={() => setMenuIsOpen(false)}
+          >
             Contact
-          </a>
-          <button className="Nav-Mobile-Button">Sign in</button>
+          </NavLink>
+          {logInDetails.isLoggedIn ? (
+            <div>
+              <Button onClick={() => setMenuIsOpen(false)}>
+                {logInDetails.loggedUserName}
+              </Button>
+              <Button
+                onClick={() => {
+                  setMenuIsOpen(false);
+                  handleLogOut();
+                }}
+              >
+                sign out
+              </Button>
+            </div>
+          ) : (
+            <NavLink
+              to={"signin"}
+              className="Nav-Mobile-Button"
+              onClick={() => setMenuIsOpen(false)}
+            >
+              Sign in
+            </NavLink>
+          )}
         </div>
       </div>
     </>

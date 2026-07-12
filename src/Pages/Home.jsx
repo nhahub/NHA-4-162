@@ -1,6 +1,4 @@
-import React from "react";
 import "../Styles/home.css";
-import { NavBar } from "../Components/Navbar";
 
 // Home.jsx is intentionally self-contained (no external section files).
 // Each page section is split into its own internal component, and all are composed below.
@@ -27,9 +25,9 @@ function HeroSection() {
 
         {/* 🔹 Supporting Text */}
         <p className="hero-text">
-          Step into the arena where shadows meet neon.  
-          No excuses. No fluff. Just raw strength forged in sweat and steel.  
-          Discipline beats motivation — every single time.
+          Step into the arena where shadows meet neon. No excuses. No fluff.
+          Just raw strength forged in sweat and steel. Discipline beats
+          motivation — every single time.
         </p>
 
         {/* 🔹 Call to Action Buttons */}
@@ -136,13 +134,14 @@ function MembershipTeaserSection({ memberships }) {
 
 function TestimonialsSection({ testimonials }) {
   return (
-    <section className="testimonials"
-    style={{
+    <section
+      className="testimonials"
+      style={{
         backgroundImage: "url('../g10.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      >
+    >
       {/* 🔹 Testimonials */}
       <h2>THE IRON SPEAKS</h2>
       <div className="testimonials-grid">
@@ -186,13 +185,14 @@ function ShopPreviewSection({ products }) {
 
 function BlogPreviewSection({ blogPosts }) {
   return (
-    <section className="blog-preview"
-    style={{
+    <section
+      className="blog-preview"
+      style={{
         backgroundImage: "url('../g12.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      >
+    >
       {/* 🔹 Blog / Resources */}
       <h2>WAR ROOM NOTES</h2>
       <div className="blog-grid">
@@ -333,7 +333,6 @@ function Home() {
 
   return (
     <div className="home">
-
       {/* 🔹 Hero Section */}
       <HeroSection />
 
@@ -358,7 +357,6 @@ function Home() {
       {/* 🔹 Membership CTA */}
       <MembershipCtaSection />
 
-
       {/* 🔹 Footer */}
       <FooterSection />
     </div>
@@ -366,4 +364,3 @@ function Home() {
 }
 
 export default Home;
-

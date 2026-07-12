@@ -4,8 +4,8 @@
 ---------------------------------------------------- */
 
 /* 🔹 Font Imports */
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap");
 
 /* 🔹 Root Variables */
 :root {
@@ -13,8 +13,8 @@
   --text-light: #fff;
   --text-gray: #aaa;
   --accent-neon: #ccff00;
-  --font-heading: 'Anton', sans-serif;
-  --font-body: 'JetBrains Mono', monospace;
+  --font-heading: "Anton", sans-serif;
+  --font-body: "JetBrains Mono", monospace;
 }
 
 /* 🔹 Global Reset */
@@ -33,7 +33,12 @@ body {
 }
 
 /* 🔹 Typography */
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-family: var(--font-heading);
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -132,7 +137,6 @@ p {
   margin-top: 3rem;
 }
 
-
 /* ----------------------------------------------------
    (2/4) STATS + CLASSES PREVIEW + MEMBERSHIP TEASER
 ---------------------------------------------------- */
@@ -201,14 +205,13 @@ p {
 
 .class-card {
   background-color: rgba(17, 17, 17, 0.85); /* dark with 85% opacity */
-  border: 1px solid rgba(51, 51, 51, 0.7);  /* semi-transparent border */
+  border: 1px solid rgba(51, 51, 51, 0.7); /* semi-transparent border */
   width: 280px;
   padding: 2rem;
   transition: all 0.3s ease;
-  -webkit-backdrop-filter: blur(4px);       /* Safari support */
-  backdrop-filter: blur(4px);               /* optional frosted glass effect */
+  -webkit-backdrop-filter: blur(4px); /* Safari support */
+  backdrop-filter: blur(4px); /* optional frosted glass effect */
 }
-
 
 .class-card:hover {
   border-color: var(--accent-neon);
@@ -305,7 +308,6 @@ p {
   margin-top: 3rem;
 }
 
-
 /* ----------------------------------------------------
    (3/4) TESTIMONIALS + SHOP PREVIEW + BLOG/RESOURCES
 ---------------------------------------------------- */
@@ -341,9 +343,7 @@ p {
   -webkit-backdrop-filter: blur(4px); /* Safari support */
   /* Optional frosted glass effect */
   backdrop-filter: blur(4px);
-  
 }
-
 
 .testimonial-card:hover {
   border-color: var(--accent-neon);
@@ -462,9 +462,7 @@ p {
   -webkit-backdrop-filter: blur(4px); /* Safari support */
   /* Optional frosted glass effect */
   backdrop-filter: blur(4px);
-  
 }
-
 
 .blog-card:hover {
   border-color: var(--accent-neon);
@@ -497,7 +495,6 @@ p {
 .blog-card a:hover {
   color: var(--text-light);
 }
-
 
 /* ----------------------------------------------------
    (4/4) MEMBERSHIP CTA + FOOTER + RESPONSIVE RULES

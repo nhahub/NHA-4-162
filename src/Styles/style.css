@@ -1,0 +1,273 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+.Items-Container {
+  width: 90%;
+}
+.Item-Data {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+}
+.Item-Text {
+  font-family: "Anton", sans-serif;
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: start;
+}
+.Item-Category {
+  text-transform: uppercase;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.49);
+}
+.Item-Name {
+  text-transform: uppercase;
+  font-size: 16px;
+  color: white;
+}
+.Item-Price-Cart {
+  font-family: "Anton", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+.Item-Price {
+  color: white;
+}
+.Btn-Component {
+  font-family: "Anton", sans-serif;
+  background-color: #c3fc2f;
+  padding: 6px;
+  border: 1px solid;
+  border-radius: 4px;
+}
+
+.Cart-Buttons {
+  padding-right: 100px;
+  padding-bottom: 12px;
+  text-align: end;
+}
+.Cart-Item {
+  margin-left: 50px;
+  width: 680px;
+  height: 200px;
+}
+
+.Cart-Image-Wrapper {
+  height: 200px;
+  overflow: hidden;
+}
+
+.Cart-Image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.Cost {
+  color: white;
+  text-align: end;
+  padding-right: 100px;
+}
+.Blog-Container {
+  width: 1200px;
+  margin: 0px auto;
+}
+.Blog {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 200px;
+  border-top: 1px solid rgba(255, 255, 255, 0.159);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.159);
+}
+.Blog-Image {
+  width: 20%;
+  height: auto;
+}
+.Blog-Text {
+  text-align: start;
+  width: 70%;
+}
+.Blog-Name {
+  color: white;
+  text-transform: uppercase;
+  font-family: "Anton", sans-serif;
+  font-size: 36px;
+  text-decoration: none;
+}
+.Blog:hover .Blog-Name {
+  color: #c3fc2f;
+}
+.Blog-Description {
+  color: rgba(255, 255, 255, 0.49);
+  font-size: 16px;
+}
+.Blog-Time-To-Read {
+  color: rgba(255, 255, 255, 0.49);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+.Sign-In {
+  max-width: 660px;
+  margin: 20px auto;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Sign-In-Header {
+  font-size: 56px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+  font-family: "Anton", sans-serif;
+  color: white;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 400px;
+}
+
+.Form input {
+  width: 100%;
+  padding: 18px;
+  background-color: black;
+  border: 1px solid #333;
+  color: #9ca3af;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 16px;
+}
+
+.Form input:focus {
+  border-color: #c3fc2f;
+  outline: none;
+}
+.Form-Errors {
+  color: red;
+  text-align: start;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 14px;
+}
+.Sign-Up-Link {
+  margin-top: 25px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #d97757;
+}
+@media screen and (max-width: 768px) {
+  .Cart-Item {
+    width: 100%;
+    max-width: 340px;
+    height: auto;
+  }
+
+  .Cart-Item .card-body > div {
+    flex-direction: column;
+    gap: 8px !important;
+  }
+
+  .Cart-Item .Btn-Component,
+  .Cart-Item button {
+    width: 100%;
+  }
+
+  .Cart-Buttons {
+    padding-right: 24px;
+  }
+  .Cost {
+    padding-right: 24px;
+  }
+  .Blog-Container {
+    width: 400px;
+  }
+  .Blog {
+    flex-direction: column;
+    align-items: start;
+    height: 465px;
+    margin: 24px auto;
+  }
+  .Blog-Image {
+    width: 100%;
+    align-self: center;
+  }
+  .Blog-Description {
+    font-size: 14px;
+  }
+
+  .Sign-In-Header {
+    font-size: 34px;
+    margin-bottom: 25px;
+  }
+
+  .Form {
+    gap: 7px;
+    width: 300px;
+  }
+
+  .Form input {
+    font-size: 14px;
+  }
+  .Form-Errors {
+    font-size: 10px;
+  }
+  .Sign-Up-Link {
+    margin-top: 15px;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #d97757;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  .Cart-Item {
+    margin: auto;
+    width: 480px;
+    height: auto;
+  }
+  .Blog-Container {
+    width: 700px;
+  }
+  .Blog {
+    height: 330px;
+  }
+  .Blog-Image {
+    width: 32%;
+    height: 110px;
+    margin-right: 24px;
+  }
+  .Blog-Text {
+    width: 50%;
+  }
+  .Blog-Name {
+    font-size: 32px;
+  }
+
+  .Sign-In-Header {
+    font-size: 45px;
+    margin-bottom: 25px;
+  }
+
+  .Form {
+    gap: 8px;
+    width: 350px;
+  }
+
+  .Form input {
+    font-size: 14px;
+  }
+  .Form-Errors {
+    font-size: 11px;
+  }
+  .Sign-Up-Link {
+    margin-top: 20px;
+    font-size: 14px;
+  }
+}

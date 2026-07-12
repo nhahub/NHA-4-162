@@ -1,4 +1,3 @@
-import React from "react";
 import "../Styles/Plans.css";
 
 function Hero() {
@@ -10,8 +9,8 @@ function Hero() {
 
         {/* 🔹 Tagline */}
         <p className="membership-hero-text">
-          Strength has levels — find yours.  
-          No excuses, no limits, just pure discipline.
+          Strength has levels — find yours. No excuses, no limits, just pure
+          discipline.
         </p>
 
         {/* 🔹 Call to Action Buttons */}
@@ -144,8 +143,8 @@ function Testimonials() {
         {/* Testimonial 1 */}
         <div className="testimonial-card">
           <p>
-            “Joining GEMFIT was the best decision I’ve made. The Pro plan gave me
-            access to classes that keep me motivated every single day.”
+            “Joining GEMFIT was the best decision I’ve made. The Pro plan gave
+            me access to classes that keep me motivated every single day.”
           </p>
           <h4>— Sarah M.</h4>
         </div>
@@ -181,7 +180,10 @@ function FAQ() {
       {/* 🔹 FAQ Items */}
       <div className="faq-item">
         <h3>Can I upgrade my plan later?</h3>
-        <p>Yes! You can upgrade at any time and only pay the difference for the current billing cycle.</p>
+        <p>
+          Yes! You can upgrade at any time and only pay the difference for the
+          current billing cycle.
+        </p>
       </div>
 
       <div className="faq-item">
@@ -191,12 +193,18 @@ function FAQ() {
 
       <div className="faq-item">
         <h3>Is there a contract?</h3>
-        <p>No long-term contracts. All memberships are month-to-month with the freedom to cancel anytime.</p>
+        <p>
+          No long-term contracts. All memberships are month-to-month with the
+          freedom to cancel anytime.
+        </p>
       </div>
 
       <div className="faq-item">
         <h3>Can I bring a guest?</h3>
-        <p>Yes. Guest passes are included depending on your plan tier (Basic: 1, Pro: 3, Elite: Unlimited).</p>
+        <p>
+          Yes. Guest passes are included depending on your plan tier (Basic: 1,
+          Pro: 3, Elite: Unlimited).
+        </p>
       </div>
     </section>
   );
@@ -211,8 +219,8 @@ function FinalCTA() {
 
         {/* 🔹 Motivational Text */}
         <p>
-          No excuses. No limits.  
-          Choose your plan today and step into the GEMFIT arena.
+          No excuses. No limits. Choose your plan today and step into the GEMFIT
+          arena.
         </p>
 
         {/* 🔹 CTA Buttons */}
@@ -225,18 +233,17 @@ function FinalCTA() {
   );
 }
 
-function Plans(){
-
-    return(
-        <>
-        <Hero />
-        <MembershipPlans />
-        <ComparisonTable />
-        <Testimonials />
-        <FAQ />
-        <FinalCTA />
-        </>
-    )
+function Plans() {
+  return (
+    <>
+      <Hero />
+      <MembershipPlans />
+      <ComparisonTable />
+      <Testimonials />
+      <FAQ />
+      <FinalCTA />
+    </>
+  );
 }
 
 export default Plans;
