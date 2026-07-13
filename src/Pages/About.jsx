@@ -1,4 +1,4 @@
-import React from "react";
+
 import "../Styles/About.css";
 
 function AboutHero() {
@@ -347,33 +347,6 @@ function CTA() {
   );
 }
 
-function Footer() {
-  return (
-    <footer className="footer">
-      {/* 🔹 Footer */}
-      <div className="footer-links">
-        <a href="/classes">CLASSES</a>
-        <a href="/membership">MEMBERSHIP</a>
-        <a href="/shop">SHOP</a>
-        <a href="/resources">RESOURCES</a>
-      </div>
-
-      <div className="footer-social">
-        <a href="#" aria-label="Instagram">
-          ⌁
-        </a>
-        <a href="#" aria-label="YouTube">
-          ▶
-        </a>
-        <a href="#" aria-label="TikTok">
-          ♪
-        </a>
-      </div>
-
-      <p>© {new Date().getFullYear()} GEMFIT. TRAIN LOUD. LIVE STRONG.</p>
-    </footer>
-  );
-}
 
 function About(){
 
@@ -387,7 +360,6 @@ function About(){
     <Community />
     <Achievements />
     <CTA />
-    <Footer />
     </>
 
     );

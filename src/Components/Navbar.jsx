@@ -38,13 +38,15 @@ export function NavBar({ logInDetails, setLogInDetails }) {
       <div className="Nav d-none d-md-flex container-fluid">
         <span className="Title">GemFit</span>
         <div className="Nav-Links gap-md-3">
-          <NavLink to={""} className="Nav-Link">
+          <NavLink to={"/"} className="Nav-Link">
             Home
           </NavLink>
           <NavLink to={"about"} className="Nav-Link">
             About
           </NavLink>
-          <NavLink className="Nav-Link">Classes</NavLink>
+          <NavLink to={"classes"} className="Nav-Link">
+            Classes
+          </NavLink>
           <NavLink to={"memberships"} className="Nav-Link">
             Membership
           </NavLink>
@@ -82,7 +84,7 @@ export function NavBar({ logInDetails, setLogInDetails }) {
         </div>
         <div className={`Nav-Mobile-Links ${menuIsOpen ? "d-flex" : "d-none"}`}>
           <NavLink
-            to={""}
+            to={"/"}
             className="Nav-Mobile-Link"
             onClick={() => setMenuIsOpen(false)}
           >
@@ -96,6 +98,7 @@ export function NavBar({ logInDetails, setLogInDetails }) {
             About
           </NavLink>
           <NavLink
+            to={"classes"}
             className="Nav-Mobile-Link"
             onClick={() => setMenuIsOpen(false)}
           >

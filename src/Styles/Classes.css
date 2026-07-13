@@ -1,0 +1,353 @@
+/* ================= ISOLATED CLASSES STYLES =================
+   This file must not affect Home (or any other page).
+   All selectors are scoped under .classes-page.
+=========================================================== */
+
+.classes-page {
+  width: 100%;
+  background: #000;
+  color: #fff;
+}
+
+/* ================= HERO ================= */
+
+.classes-page .hero {
+  width: 100%;
+  height: 560px;
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+  padding: 0 110px;
+
+  background: #000;
+
+  border-top: 1px solid #202020;
+  border-bottom: 1px solid #202020;
+}
+
+.classes-page .hero-small {
+  display: block;
+
+  color: #c7ff29;
+
+  font-family: "JetBrains Mono", monospace;
+
+  font-size: 13px;
+
+  letter-spacing: 3px;
+
+  margin-bottom: 24px;
+
+  text-transform: uppercase;
+}
+
+.classes-page .hero h1 {
+  font-family: "Anton", sans-serif;
+
+  font-size: 138px;
+
+  line-height: 0.9;
+
+  letter-spacing: 2px;
+
+  color: #fff;
+
+  margin-bottom: 30px;
+}
+
+.classes-page .hero p {
+  width: 620px;
+
+  color: #8a8a8a;
+
+  font-family: "JetBrains Mono", monospace;
+
+  font-size: 17px;
+
+  line-height: 2;
+
+  text-transform: uppercase;
+}
+
+/* ================= CLASS CARD ================= */
+
+.classes-page .class-card {
+  width: 100%;
+
+  min-height: 128px;
+
+  padding: 18px 20px;
+
+  background: #000;
+
+  border: 1px solid #222;
+
+  cursor: pointer;
+
+  transition: all 0.3s ease;
+}
+
+.classes-page .class-card:hover {
+  border-color: #c7ff29;
+
+  transform: translateY(-2px);
+}
+
+.classes-page .class-card:hover h3 {
+  color: #c7ff29;
+}
+
+.classes-page .card-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 14px;
+}
+
+.classes-page .class-time {
+  font-family: "JetBrains Mono", monospace;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  color: #c7ff29;
+}
+
+.classes-page .class-spots {
+  font-family: "JetBrains Mono", monospace;
+
+  font-size: 10px;
+
+  color: #8b8b8b;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+.classes-page .class-spots.full {
+  color: #ff3b3b;
+}
+
+.classes-page .class-card h3 {
+  font-family: "Anton", sans-serif;
+
+  font-size: 18px;
+
+  font-weight: 400;
+
+  line-height: 1;
+
+  letter-spacing: 0.4px;
+
+  color: #fff;
+
+  margin-bottom: 12px;
+
+  transition: color 0.3s ease;
+}
+
+.classes-page .class-card p {
+  font-family: "JetBrains Mono", monospace;
+
+  font-size: 10px;
+
+  color: #7f7f7f;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+/* ================= SCHEDULE ================= */
+
+.classes-page .schedule {
+  width: 100%;
+
+  max-width: 1380px;
+
+  margin: 90px auto;
+
+  padding: 0 24px;
+}
+
+.classes-page .schedule-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  column-gap: 18px;
+
+  row-gap: 55px;
+}
+
+/* ================ DAY ================= */
+
+.classes-page .day {
+  width: 100%;
+}
+
+.classes-page .day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid #242424;
+
+  padding-bottom: 14px;
+
+  margin-bottom: 22px;
+}
+
+.classes-page .day-header h2 {
+  font-family: "Anton", sans-serif;
+
+  font-size: 28px;
+
+  color: #fff;
+
+  letter-spacing: 1px;
+}
+
+.classes-page .day-header span {
+  font-family: "JetBrains Mono", monospace;
+
+  font-size: 11px;
+
+  color: #7d7d7d;
+
+  letter-spacing: 2px;
+}
+
+.classes-page .day-cards {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+/* ================== RESPONSIVE ================== */
+
+@media (max-width: 1200px) {
+  .classes-page .hero {
+    padding: 0 60px;
+  }
+
+  .classes-page .hero h1 {
+    font-size: 110px;
+  }
+
+  .classes-page .hero p {
+    width: 520px;
+    font-size: 15px;
+  }
+
+  .classes-page .schedule {
+    padding: 0 25px;
+  }
+
+  .classes-page .schedule-grid {
+    gap: 50px 15px;
+  }
+}
+
+@media (max-width: 992px) {
+  .classes-page .hero {
+    height: auto;
+    padding: 120px 40px 90px;
+  }
+
+  .classes-page .hero h1 {
+    font-size: 80px;
+  }
+
+  .classes-page .hero p {
+    width: 100%;
+    max-width: 500px;
+    font-size: 14px;
+    line-height: 1.8;
+  }
+
+  .classes-page .schedule {
+    margin: 80px auto;
+    padding: 0 20px;
+  }
+
+  .classes-page .schedule-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 45px 20px;
+  }
+
+  .classes-page .day-header h2 {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .classes-page .hero {
+    padding: 90px 20px 70px;
+  }
+
+  .classes-page .hero-small {
+    font-size: 11px;
+    letter-spacing: 2px;
+  }
+
+  .classes-page .hero h1 {
+    font-size: 58px;
+  }
+
+  .classes-page .hero p {
+    width: 100%;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .classes-page .schedule {
+    margin: 60px auto;
+    padding: 0 16px;
+  }
+
+  .classes-page .schedule-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .classes-page .day-header {
+    margin-bottom: 20px;
+  }
+
+  .classes-page .day-header h2 {
+    font-size: 34px;
+  }
+
+  .classes-page .day-header span {
+    font-size: 10px;
+  }
+
+  .classes-page .class-card {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .classes-page .class-card h3 {
+    font-size: 20px;
+  }
+
+  .classes-page .class-time {
+    font-size: 12px;
+  }
+
+  .classes-page .class-spots,
+  .classes-page .class-card p {
+    font-size: 10px;
+  }
+}
+

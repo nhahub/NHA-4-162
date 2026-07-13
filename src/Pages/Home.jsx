@@ -1,9 +1,11 @@
+
 import "../Styles/home.css";
+import { useNavigate } from "react-router-dom";
 
 // Home.jsx is intentionally self-contained (no external section files).
 // Each page section is split into its own internal component, and all are composed below.
 
-function HeroSection() {
+function HeroSection({ navigate }) {
   return (
     <section
       className="hero"
@@ -32,9 +34,18 @@ function HeroSection() {
 
         {/* 🔹 Call to Action Buttons */}
         <div className="hero-buttons">
-          <button className="btn neon">JOIN THE CLUB</button>
-          <button className="btn outline">EXPLORE CLASSES</button>
-          <button className="btn outline">VIEW MEMBERSHIPS</button>
+          <button onClick={() => navigate("/signin")} className="btn neon">
+            JOIN THE CLUB
+          </button>
+          <button onClick={() => navigate("/classes")} className="btn outline">
+            EXPLORE CLASSES
+          </button>
+          <button
+            onClick={() => navigate("/memberships")}
+            className="btn outline"
+          >
+            VIEW MEMBERSHIPS
+          </button>
         </div>
 
         {/* 🔹 Quick Highlights */}
@@ -80,7 +91,7 @@ function StatsSection() {
   );
 }
 
-function ClassesPreviewSection({ classes }) {
+function ClassesPreviewSection({ classes, navigate }) {
   return (
     <section
       className="classes-preview"
@@ -103,15 +114,19 @@ function ClassesPreviewSection({ classes }) {
             </div>
           ))}
         </div>
-        <a href="/classes" className="link">
+        <button
+          onClick={() => navigate("/classes")}
+          className="link"
+          style={{ background: "transparent", border: "none" }}
+        >
           VIEW FULL SCHEDULE →
-        </a>
+        </button>
       </div>
     </section>
   );
 }
 
-function MembershipTeaserSection({ memberships }) {
+function MembershipTeaserSection({ memberships, navigate }) {
   return (
     <section className="membership-teaser">
       {/* 🔹 Membership Teaser */}
@@ -122,7 +137,11 @@ function MembershipTeaserSection({ memberships }) {
             <h3>{m.name}</h3>
             <p>{m.desc}</p>
             <div className="price">{m.price}</div>
-            <button className="btn neon" style={{ marginTop: "2rem" }}>
+            <button
+              onClick={() => navigate("/memberships")}
+              className="btn neon"
+              style={{ marginTop: "2rem" }}
+            >
               {m.cta}
             </button>
           </div>
@@ -200,7 +219,7 @@ function BlogPreviewSection({ blogPosts }) {
           <div key={b.title} className="blog-card">
             <h3>{b.title}</h3>
             <p>{b.desc}</p>
-            <a href="#">READ MORE →</a>
+            <p>READ MORE →</p>
           </div>
         ))}
       </div>
@@ -208,48 +227,22 @@ function BlogPreviewSection({ blogPosts }) {
   );
 }
 
-function MembershipCtaSection() {
+function MembershipCtaSection({ navigate }) {
   return (
     <section className="membership-cta">
       <div className="membership-cta-content">
-        {/* 🔹 Membership CTA */}
-        <h2>THE IRON IS ALREADY WAITING.</h2>
-        <button className="btn neon">START YOUR CONTRACT</button>
+      {/* 🔹 Membership CTA */}
+      <h2>THE IRON IS ALREADY WAITING.</h2>
+      <button onClick={() => navigate("/signin")} className="btn neon">
+        START YOUR CONTRACT
+      </button>
       </div>
     </section>
   );
 }
 
-
-function FooterSection() {
-  return (
-    <footer className="footer">
-      {/* 🔹 Footer */}
-      <div className="footer-links">
-        <a href="/classes">CLASSES</a>
-        <a href="/membership">MEMBERSHIP</a>
-        <a href="/shop">SHOP</a>
-        <a href="/resources">RESOURCES</a>
-      </div>
-
-      <div className="footer-social">
-        <a href="#" aria-label="Instagram">
-          ⌁
-        </a>
-        <a href="#" aria-label="YouTube">
-          ▶
-        </a>
-        <a href="#" aria-label="TikTok">
-          ♪
-        </a>
-      </div>
-
-      <p>© {new Date().getFullYear()} GEMFIT. TRAIN LOUD. LIVE STRONG.</p>
-    </footer>
-  );
-}
-
 function Home() {
+  const navigate = useNavigate();
   const classes = [
     {
       title: "HEAVY METAL FLOW",
@@ -334,16 +327,16 @@ function Home() {
   return (
     <div className="home">
       {/* 🔹 Hero Section */}
-      <HeroSection />
+      <HeroSection navigate={navigate} />
 
       {/* 🔹 Stats Section */}
       <StatsSection />
 
       {/* 🔹 Classes Preview */}
-      <ClassesPreviewSection classes={classes} />
+      <ClassesPreviewSection classes={classes} navigate={navigate} />
 
       {/* 🔹 Membership Teaser */}
-      <MembershipTeaserSection memberships={memberships} />
+      <MembershipTeaserSection memberships={memberships} navigate={navigate} />
 
       {/* 🔹 Testimonials */}
       <TestimonialsSection testimonials={testimonials} />
@@ -355,10 +348,7 @@ function Home() {
       <BlogPreviewSection blogPosts={blogPosts} />
 
       {/* 🔹 Membership CTA */}
-      <MembershipCtaSection />
-
-      {/* 🔹 Footer */}
-      <FooterSection />
+      <MembershipCtaSection navigate={navigate} />
     </div>
   );
 }

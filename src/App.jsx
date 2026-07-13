@@ -9,12 +9,16 @@ import Contact from "./Pages/Contact.jsx";
 import About from "./Pages/About.jsx";
 import Home from "./Pages/Home.jsx";
 import Plans from "./Pages/Plans.jsx";
+import Classes from "./Classes.jsx";
 export default function App() {
   const router = createBrowserRouter([
     {
       path: "",
       element: <Layout />,
       children: [
+        { index: true, element: <Home /> },
+        { path: "about", element: <About /> },
+        { path: "memberships", element: <Plans /> },
         {
           path: "shop",
           element: <Body />,
@@ -29,12 +33,10 @@ export default function App() {
             },
           ],
         },
+        { path: "classes", element: <Classes /> },
         { path: "journal", element: <Blogs /> },
-        { path: "signin", element: <SignIn /> },
         { path: "contact", element: <Contact /> },
-        { path: "about", element: <About /> },
-        { path: "", element: <Home /> },
-        { path: "memberships", element: <Plans /> },
+        { path: "signin", element: <SignIn /> },
       ],
     },
   ]);
