@@ -1,37 +1,41 @@
-
 import "../Styles/About.css";
+import { useNavigate } from "react-router-dom";
 
-function AboutHero() {
- return (
-    <section className="about-hero"
-    style={{
+function AboutHero({ navigate }) {
+  return (
+    <section
+      className="about-hero"
+      style={{
         backgroundImage: "url('../g19.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      >
+    >
       <div className="about-hero-content">
         {/* 🔹 Big Headline */}
         <h1 className="about-hero-title">FORGED IN IRON</h1>
 
         {/* 🔹 Supporting Text */}
         <p className="about-hero-text">
-          Since 2024, GEMFIT has been more than a gym — it’s a movement.  
-          Forged in iron and built on discipline, we exist to transform strength  
-          into lifestyle and community into family.  
-          Step inside GEMFIT, where legends are made.
+          Since 2024, GEMFIT has been more than a gym — it’s a movement. Forged
+          in iron and built on discipline, we exist to transform strength into
+          lifestyle and community into family. Step inside GEMFIT, where legends
+          are made.
         </p>
 
         {/* 🔹 Call to Action */}
         <div className="hero-buttons">
-          <button className="btn neon">JOIN THE FAMILY</button>
-          <button className="btn outline">OUR STORY</button>
+          <button onClick={() => navigate("/signin")} className="btn neon">
+            JOIN THE FAMILY
+          </button>
+          <button onClick={() => navigate("/")} className="btn outline">
+            OUR STORY
+          </button>
         </div>
       </div>
     </section>
   );
 }
-
 
 function OurStory() {
   return (
@@ -63,13 +67,14 @@ function OurStory() {
 
 function Philosophy() {
   return (
-    <section className="about-philosophy"
-    style={{
+    <section
+      className="about-philosophy"
+      style={{
         backgroundImage: "url('../g20.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      >
+    >
       {/* 🔹 Section Title */}
       <h2>OUR PHILOSOPHY</h2>
 
@@ -128,8 +133,8 @@ function Facilities() {
           <div className="facility-card">
             <h3>Weights Arena</h3>
             <p>
-              Heavy iron, Olympic platforms, and racks built for serious lifters.
-              The heart of GEMFIT’s strength culture.
+              Heavy iron, Olympic platforms, and racks built for serious
+              lifters. The heart of GEMFIT’s strength culture.
             </p>
           </div>
 
@@ -167,13 +172,14 @@ function Facilities() {
 
 function Coaches() {
   return (
-    <section className="about-coaches"
-    style={{
+    <section
+      className="about-coaches"
+      style={{
         backgroundImage: "url('../g21.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      >
+    >
       {/* 🔹 Section Title */}
       <h2>MEET OUR COACHES</h2>
 
@@ -183,8 +189,8 @@ function Coaches() {
         <div className="coach-card">
           <h3>Alex Johnson</h3>
           <p>
-            Strength & Conditioning Specialist.  
-            Known for pushing athletes beyond their limits with precision training.
+            Strength & Conditioning Specialist. Known for pushing athletes
+            beyond their limits with precision training.
           </p>
         </div>
 
@@ -192,8 +198,8 @@ function Coaches() {
         <div className="coach-card">
           <h3>Maria Lopez</h3>
           <p>
-            Olympic Lifting Expert.  
-            Focused on technique, discipline, and building explosive power.
+            Olympic Lifting Expert. Focused on technique, discipline, and
+            building explosive power.
           </p>
         </div>
 
@@ -201,8 +207,8 @@ function Coaches() {
         <div className="coach-card">
           <h3>Sam Carter</h3>
           <p>
-            Bodybuilding & Aesthetics Coach.  
-            Dedicated to symmetry, muscle growth, and stage-ready physiques.
+            Bodybuilding & Aesthetics Coach. Dedicated to symmetry, muscle
+            growth, and stage-ready physiques.
           </p>
         </div>
 
@@ -210,8 +216,8 @@ function Coaches() {
         <div className="coach-card">
           <h3>Layla Ahmed</h3>
           <p>
-            Functional Training & Mobility Specialist.  
-            Helping athletes move better, recover faster, and perform longer.
+            Functional Training & Mobility Specialist. Helping athletes move
+            better, recover faster, and perform longer.
           </p>
         </div>
       </div>
@@ -271,13 +277,14 @@ function Community() {
 
 function Achievements() {
   return (
-    <section className="about-achievements"
-    style={{
+    <section
+      className="about-achievements"
+      style={{
         backgroundImage: "url('../g8.webp')",
         backgroundSize: "cover",
         backgroundPosition: "center",
       }}
-      >
+    >
       {/* 🔹 Section Title */}
       <h2>OUR ACHIEVEMENTS</h2>
 
@@ -323,7 +330,7 @@ function Achievements() {
   );
 }
 
-function CTA() {
+function CTA({ navigate }) {
   return (
     <section className="about-cta">
       <div className="about-cta-content">
@@ -332,37 +339,39 @@ function CTA() {
 
         {/* 🔹 Motivational Text */}
         <p>
-          Discipline. Strength. Community. Recovery.  
-          GEMFIT is more than a gym — it’s a movement.  
-          Step into the neon arena and become part of the legacy.
+          Discipline. Strength. Community. Recovery. GEMFIT is more than a gym —
+          it’s a movement. Step into the neon arena and become part of the
+          legacy.
         </p>
 
         {/* 🔹 Call to Action Buttons */}
         <div className="cta-buttons">
-          <button className="btn neon">BECOME A MEMBER</button>
-          <button className="btn outline">BOOK A TOUR</button>
+          <button onClick={() => navigate("/memberships")} className="btn neon">
+            BECOME A MEMBER
+          </button>
+          <button onClick={() => navigate("/classes")} className="btn outline">
+            BOOK A TOUR
+          </button>
         </div>
       </div>
     </section>
   );
 }
 
-
-function About(){
-
-    return(
+function About() {
+  const navigate = useNavigate();
+  return (
     <>
-    <AboutHero />
-    <OurStory />
-    <Philosophy />
-    <Facilities/>
-    <Coaches />
-    <Community />
-    <Achievements />
-    <CTA />
+      <AboutHero navigate={navigate} />
+      <OurStory />
+      <Philosophy />
+      <Facilities />
+      <Coaches />
+      <Community />
+      <Achievements />
+      <CTA navigate={navigate} />
     </>
-
-    );
+  );
 }
 
 export default About;

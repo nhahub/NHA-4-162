@@ -1,131 +1,183 @@
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import "../Styles/Plans.css";
 
+const API_BASE = "https://gemdashboard-production.up.railway.app/api";
+
+function safeString(value) {
+  if (typeof value === "string") return value;
+  if (value === null || value === undefined) return "";
+  return String(value);
+}
+
+function safeNumber(value) {
+  if (typeof value === "number" && Number.isFinite(value)) return value;
+  const n = typeof value === "string" ? Number(value) : NaN;
+  return Number.isFinite(n) ? n : null;
+}
+
+function formatPrice(price) {
+  const n = safeNumber(price);
+  if (n === null) return "";
+  // Avoid i18n complexity; keep it predictable.
+  return `$${n} / month`;
+}
+
+function normalizeFeatures(features) {
+  // API schema uses PlanFeature[] where each item has { id, feature }
+  if (!Array.isArray(features)) return [];
+  return features
+    .map((f) => {
+      if (!f) return null;
+      if (typeof f === "string") return f;
+      return typeof f.feature === "string" ? f.feature : null;
+    })
+    .filter(Boolean);
+}
+
 function Hero() {
+  const navigate = useNavigate();
   return (
     <section className="membership-hero">
       <div className="membership-hero-content">
-        {/* 🔹 Big Headline */}
         <h1 className="membership-hero-title">CHOOSE YOUR GEMFIT PATH</h1>
-
-        {/* 🔹 Tagline */}
         <p className="membership-hero-text">
           Strength has levels — find yours. No excuses, no limits, just pure
           discipline.
         </p>
-
-        {/* 🔹 Call to Action Buttons */}
         <div className="cta-buttons">
-          <button className="btn neon">JOIN NOW</button>
-          <button className="btn outline">VIEW PLANS</button>
+          <button
+            className="btn neon"
+            type="button"
+            onClick={() => navigate("/signin")}
+          >
+            JOIN NOW
+          </button>
+          <button
+            className="btn outline"
+            type="button"
+            onClick={() => {
+              const el = document.getElementById("plans-section");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
+            VIEW PLANS
+          </button>
         </div>
       </div>
     </section>
   );
 }
 
-function MembershipPlans() {
+function MembershipPlans({ plans, loading, error, onRetry, onChoosePlan }) {
   return (
-    <section className="membership-plans">
-      {/* 🔹 Section Title */}
+    <section id="plans-section" className="membership-plans">
+
       <h2>MEMBERSHIP PLANS</h2>
 
-      {/* 🔹 Plans Grid */}
-      <div className="plans-grid">
-        {/* Basic Plan */}
-        <div className="plan-card">
-          <h3>Basic</h3>
-          <p className="plan-price">$29 / month</p>
-          <ul className="plan-features">
-            <li>Access to gym equipment</li>
-            <li>Locker room facilities</li>
-            <li>1 guest pass per month</li>
-          </ul>
-          <button className="btn neon">Choose Basic</button>
-        </div>
+      {loading && <div style={{ color: "#e0e0e0" }}>Loading plans…</div>}
 
-        {/* Pro Plan */}
-        <div className="plan-card">
-          <h3>Pro</h3>
-          <p className="plan-price">$59 / month</p>
-          <ul className="plan-features">
-            <li>All Basic features</li>
-            <li>Unlimited group classes</li>
-            <li>2 personal training sessions</li>
-            <li>Recovery suite access</li>
-          </ul>
-          <button className="btn neon">Choose Pro</button>
+      {!loading && error && (
+        <div
+          style={{
+            margin: "1.5rem auto",
+            maxWidth: 700,
+            color: "#ff6b6b",
+            textAlign: "center",
+          }}
+        >
+          <div style={{ fontWeight: 700 }}>Failed to load plans.</div>
+          <div style={{ opacity: 0.9, marginTop: 8 }}>{error}</div>
+          <button
+            className="btn outline"
+            type="button"
+            onClick={onRetry}
+            style={{ marginTop: 16 }}
+          >
+            Retry
+          </button>
         </div>
+      )}
 
-        {/* Elite Plan */}
-        <div className="plan-card">
-          <h3>Elite</h3>
-          <p className="plan-price">$99 / month</p>
-          <ul className="plan-features">
-            <li>All Pro features</li>
-            <li>Weekly 1-on-1 coaching</li>
-            <li>Exclusive competition prep</li>
-            <li>Priority booking & VIP lounge</li>
-          </ul>
-          <button className="btn neon">Choose Elite</button>
+      {!loading && !error && (
+        <div className="plans-grid">
+          {plans.length === 0 ? (
+            <div style={{ color: "#e0e0e0" }}>No plans available.</div>
+          ) : (
+            plans.map((plan) => {
+              const name = safeString(plan?.plan_name || plan?.name);
+              const priceText = formatPrice(plan?.price);
+              const features = normalizeFeatures(plan?.features);
+
+              return (
+                <div key={plan?.id ?? name} className="plan-card">
+                  <h3>{name || "Plan"}</h3>
+                  <p className="plan-price">{priceText}</p>
+                  <ul className="plan-features">
+                    {features.slice(0, 8).map((f, idx) => (
+                      <li key={`${idx}-${f}`}>{f}</li>
+                    ))}
+                    {features.length === 0 && <li>No features listed.</li>}
+                  </ul>
+                  <button
+                    className="btn neon"
+                    type="button"
+                    onClick={() => onChoosePlan(plan)}
+                  >
+                    Choose {name || "Plan"}
+                  </button>
+
+                </div>
+              );
+            })
+          )}
         </div>
-      </div>
+      )}
     </section>
   );
 }
 
-function ComparisonTable() {
+function ComparisonTable({ plans }) {
+  // Keep the UI stable even if backend changes.
+  const columns = plans.slice(0, 3);
+  const planNames = columns.map((p) => safeString(p?.plan_name || p?.name) || "");
+
+  const featureRows = [
+    { label: "Status", value: (p) => (p?.status ? "✔" : "—") },
+    { label: "Popular", value: (p) => (p?.is_popular ? "✔" : "—") },
+    { label: "Billing", value: (p) => safeString(p?.billing_period) },
+  ];
+
   return (
     <section className="membership-comparison">
-      {/* 🔹 Section Title */}
       <h2>COMPARE OUR PLANS</h2>
-
-      {/* 🔹 Comparison Table */}
       <table className="comparison-table">
         <thead>
           <tr>
             <th>Features</th>
-            <th>Basic</th>
-            <th>Pro</th>
-            <th>Elite</th>
+            {planNames.map((n, i) => (
+              <th key={`${n}-${i}`}>{n || `Plan ${i + 1}`}</th>
+            ))}
+            {columns.length < 3 &&
+              Array.from({ length: 3 - columns.length }).map((_, i) => (
+                <th key={`empty-${i}`}>—</th>
+              ))}
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>Gym Equipment Access</td>
-            <td>✔</td>
-            <td>✔</td>
-            <td>✔</td>
-          </tr>
-          <tr>
-            <td>Group Classes</td>
-            <td>Limited</td>
-            <td>Unlimited</td>
-            <td>Unlimited</td>
-          </tr>
-          <tr>
-            <td>Personal Training</td>
-            <td>—</td>
-            <td>2 Sessions</td>
-            <td>Weekly Coaching</td>
-          </tr>
-          <tr>
-            <td>Recovery Suite</td>
-            <td>—</td>
-            <td>✔</td>
-            <td>✔</td>
-          </tr>
-          <tr>
-            <td>Guest Passes</td>
-            <td>1 / month</td>
-            <td>2 / month</td>
-            <td>Unlimited</td>
-          </tr>
-          <tr>
-            <td>VIP Lounge</td>
-            <td>—</td>
-            <td>—</td>
-            <td>✔</td>
-          </tr>
+          {featureRows.map((row) => (
+            <tr key={row.label}>
+              <td>{row.label}</td>
+              {columns.map((p, i) => (
+                <td key={`${row.label}-${i}`}>{row.value(p)}</td>
+              ))}
+              {columns.length < 3 &&
+                Array.from({ length: 3 - columns.length }).map((_, i) => (
+                  <td key={`${row.label}-empty-${i}`}>—</td>
+                ))}
+            </tr>
+          ))}
         </tbody>
       </table>
     </section>
@@ -135,12 +187,8 @@ function ComparisonTable() {
 function Testimonials() {
   return (
     <section className="membership-testimonials">
-      {/* 🔹 Section Title */}
       <h2>WHAT OUR MEMBERS SAY</h2>
-
-      {/* 🔹 Testimonials Grid */}
       <div className="testimonials-grid">
-        {/* Testimonial 1 */}
         <div className="testimonial-card">
           <p>
             “Joining GEMFIT was the best decision I’ve made. The Pro plan gave
@@ -148,8 +196,6 @@ function Testimonials() {
           </p>
           <h4>— Sarah M.</h4>
         </div>
-
-        {/* Testimonial 2 */}
         <div className="testimonial-card">
           <p>
             “The Elite plan transformed my training. Weekly coaching sessions
@@ -157,8 +203,6 @@ function Testimonials() {
           </p>
           <h4>— Ahmed R.</h4>
         </div>
-
-        {/* Testimonial 3 */}
         <div className="testimonial-card">
           <p>
             “I started with the Basic plan and quickly upgraded. GEMFIT’s
@@ -174,10 +218,7 @@ function Testimonials() {
 function FAQ() {
   return (
     <section className="membership-faq">
-      {/* 🔹 Section Title */}
       <h2>FREQUENTLY ASKED QUESTIONS</h2>
-
-      {/* 🔹 FAQ Items */}
       <div className="faq-item">
         <h3>Can I upgrade my plan later?</h3>
         <p>
@@ -185,12 +226,10 @@ function FAQ() {
           current billing cycle.
         </p>
       </div>
-
       <div className="faq-item">
         <h3>Do you offer student discounts?</h3>
         <p>Absolutely. Students receive 15% off all plans with valid ID.</p>
       </div>
-
       <div className="faq-item">
         <h3>Is there a contract?</h3>
         <p>
@@ -198,7 +237,6 @@ function FAQ() {
           freedom to cancel anytime.
         </p>
       </div>
-
       <div className="faq-item">
         <h3>Can I bring a guest?</h3>
         <p>
@@ -211,34 +249,123 @@ function FAQ() {
 }
 
 function FinalCTA() {
+  const navigate = useNavigate();
   return (
     <section className="membership-cta">
       <div className="membership-cta-content">
-        {/* 🔹 Headline */}
         <h2>THE IRON IS WAITING</h2>
-
-        {/* 🔹 Motivational Text */}
         <p>
           No excuses. No limits. Choose your plan today and step into the GEMFIT
           arena.
         </p>
-
-        {/* 🔹 CTA Buttons */}
         <div className="cta-buttons">
-          <button className="btn neon">Join GEMFIT Now</button>
-          <button className="btn outline">Explore Memberships</button>
+          <button
+            className="btn neon"
+            type="button"
+            onClick={() => navigate("/signin")}
+          >
+            Join GEMFIT Now
+          </button>
+          <button
+            className="btn outline"
+            type="button"
+            onClick={() => {
+              const el = document.getElementById("plans-section");
+              if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }}
+          >
+            Explore Memberships
+          </button>
         </div>
       </div>
     </section>
   );
 }
 
-function Plans() {
+export default function Plans() {
+  const navigate = useNavigate();
+  const [plans, setPlans] = useState([]);
+
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  const fetchPlans = async () => {
+    setLoading(true);
+    setError("");
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+    try {
+      // Public endpoint: GET /plans?status=active
+      const url = new URL(`${API_BASE}/plans`);
+      url.searchParams.set("status", "active");
+      url.searchParams.set("per_page", "20");
+
+      const res = await fetch(url.toString(), {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+        },
+        signal: controller.signal,
+      });
+
+      if (!res.ok) {
+        // Do not leak internal details.
+        throw new Error(`Request failed (${res.status})`);
+      }
+
+      const json = await res.json();
+
+      const data = json?.data;
+      // API returns paginated response where `data` is the list.
+      const list = Array.isArray(data) ? data : Array.isArray(data?.data) ? data.data : [];
+
+      setPlans(list);
+    } catch (e) {
+      const msg = e?.name === "AbortError" ? "Request timed out." : "Network error.";
+      setError(msg);
+      setPlans([]);
+    } finally {
+      clearTimeout(timeoutId);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Wrap in an inner function to avoid lint warnings and keep render pure.
+    const run = async () => {
+      await fetchPlans();
+    };
+    run();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+
+  const memoPlans = useMemo(() => plans ?? [], [plans]);
+
   return (
     <>
       <Hero />
-      <MembershipPlans />
-      <ComparisonTable />
+      <MembershipPlans
+        plans={memoPlans}
+        loading={loading}
+        error={error}
+        onRetry={fetchPlans}
+        onChoosePlan={(plan) => {
+          // Routes available in navbar/router:
+          // - /signin exists.
+          // - /shop exists (and is the closest “next step” page).
+          const token = localStorage.getItem("token") || sessionStorage.getItem("token");
+          const target = token ? "/shop" : "/signin";
+          navigate(target, {
+            state: { chosenPlanId: plan?.id ?? null },
+          });
+        }}
+
+      />
+
+      <ComparisonTable plans={memoPlans} />
       <Testimonials />
       <FAQ />
       <FinalCTA />
@@ -246,4 +373,3 @@ function Plans() {
   );
 }
 
-export default Plans;

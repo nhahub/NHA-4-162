@@ -18,6 +18,7 @@ export default function App() {
       children: [
         { index: true, element: <Home /> },
         { path: "about", element: <About /> },
+        { path: "classes", element: <Classes /> },
         { path: "memberships", element: <Plans /> },
         {
           path: "shop",
@@ -33,10 +34,10 @@ export default function App() {
             },
           ],
         },
-        { path: "classes", element: <Classes /> },
         { path: "journal", element: <Blogs /> },
         { path: "contact", element: <Contact /> },
         { path: "signin", element: <SignIn /> },
+        { path: "*", element: <Home /> },
       ],
     },
   ]);

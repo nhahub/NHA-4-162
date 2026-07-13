@@ -1,0 +1,2986 @@
+openapi: "3.1.0"
+info:
+  title: "Gym Management API - Production"
+  version: "1.0.0"
+  description: "RESTful API for Gym Management System with authentication, role-based access, and full CRUD operations."
+servers:
+  - url: "https://gemdashboard-production.up.railway.app/api"
+    description: "Railway Production"
+  - url: "http://localhost:8000/api"
+    description: "Local Development"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: Sanctum
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          nullable: true
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          nullable: true
+    PaginatedResponse:
+      allOf:
+        - $ref: "#/components/schemas/ApiResponse"
+        - type: object
+          properties:
+            meta:
+              type: object
+              properties:
+                current_page:
+                  type: integer
+                last_page:
+                  type: integer
+                per_page:
+                  type: integer
+                total:
+                  type: integer
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          nullable: true
+        gender:
+          type: string
+          nullable: true
+          enum: [male, female, other]
+        age:
+          type: integer
+          nullable: true
+        profile_image:
+          type: string
+          format: uri
+          nullable: true
+        role:
+          type: string
+          enum: [admin, user]
+        status:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+    AuthResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        data:
+          type: object
+          properties:
+            user:
+              $ref: "#/components/schemas/User"
+            token:
+              type: string
+    Coach:
+      type: object
+      properties:
+        id:
+          type: integer
+        photo:
+          type: string
+          format: uri
+          nullable: true
+        full_name:
+          type: string
+        job_title:
+          type: string
+        short_description:
+          type: string
+          nullable: true
+        long_description:
+          type: string
+          nullable: true
+        experience:
+          type: string
+          nullable: true
+        specialization:
+          type: string
+          nullable: true
+        instagram_link:
+          type: string
+          format: uri
+          nullable: true
+        facebook_link:
+          type: string
+          format: uri
+          nullable: true
+        linkedin_link:
+          type: string
+          format: uri
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        email:
+          type: string
+          format: email
+          nullable: true
+        display_order:
+          type: integer
+        status:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+    PlanFeature:
+      type: object
+      properties:
+        id:
+          type: integer
+        feature:
+          type: string
+    Plan:
+      type: object
+      properties:
+        id:
+          type: integer
+        plan_name:
+          type: string
+        subtitle:
+          type: string
+          nullable: true
+        price:
+          type: string
+        billing_period:
+          type: string
+        description:
+          type: string
+          nullable: true
+        features:
+          type: array
+          items:
+            $ref: "#/components/schemas/PlanFeature"
+        button_text:
+          type: string
+          nullable: true
+        button_url:
+          type: string
+          nullable: true
+        badge:
+          type: string
+          nullable: true
+        is_popular:
+          type: boolean
+        background_color:
+          type: string
+          nullable: true
+        status:
+          type: boolean
+        sort_order:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        description:
+          type: string
+          nullable: true
+        image:
+          type: string
+          format: uri
+          nullable: true
+        status:
+          type: boolean
+        products_count:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+    ProductGallery:
+      type: object
+      properties:
+        id:
+          type: integer
+        image:
+          type: string
+          format: uri
+    Product:
+      type: object
+      properties:
+        id:
+          type: integer
+        product_image:
+          type: string
+          format: uri
+          nullable: true
+        product_name:
+          type: string
+        slug:
+          type: string
+        category:
+          $ref: "#/components/schemas/Category"
+        description:
+          type: string
+          nullable: true
+        short_description:
+          type: string
+          nullable: true
+        price:
+          type: string
+        discount_price:
+          type: string
+          nullable: true
+        sku:
+          type: string
+          nullable: true
+        quantity:
+          type: integer
+          nullable: true
+        stock_status:
+          type: string
+          nullable: true
+          enum: [in_stock, out_of_stock]
+        gallery:
+          type: array
+          items:
+            $ref: "#/components/schemas/ProductGallery"
+        is_featured:
+          type: boolean
+        status:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+    OrderItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        product_id:
+          type: integer
+        product_name:
+          type: string
+        price:
+          type: string
+        quantity:
+          type: integer
+        subtotal:
+          type: string
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+        order_number:
+          type: string
+        user:
+          $ref: "#/components/schemas/User"
+        items:
+          type: array
+          items:
+            $ref: "#/components/schemas/OrderItem"
+        total:
+          type: string
+        status:
+          type: string
+          enum: [pending, processing, completed, cancelled]
+        payment_method:
+          type: string
+          nullable: true
+        payment_status:
+          type: string
+          nullable: true
+          enum: [paid, unpaid, refunded]
+        shipping_address:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+    Gallery:
+      type: object
+      properties:
+        id:
+          type: integer
+        image:
+          type: string
+          format: uri
+        caption:
+          type: string
+          nullable: true
+        sort_order:
+          type: integer
+        created_at:
+          type: string
+          format: date-time
+    Testimonial:
+      type: object
+      properties:
+        id:
+          type: integer
+        customer_image:
+          type: string
+          format: uri
+          nullable: true
+        customer_name:
+          type: string
+        rating:
+          type: integer
+          minimum: 1
+          maximum: 5
+        review:
+          type: string
+        status:
+          type: boolean
+        created_at:
+          type: string
+          format: date-time
+    ContactMessage:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          nullable: true
+        subject:
+          type: string
+          nullable: true
+        message:
+          type: string
+        is_read:
+          type: boolean
+        replied:
+          type: boolean
+        replied_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+    Settings:
+      type: object
+      additionalProperties:
+        type: string
+    DashboardData:
+      type: object
+      properties:
+        stats:
+          type: object
+          properties:
+            total_users:
+              type: integer
+            total_coaches:
+              type: integer
+            total_products:
+              type: integer
+            total_plans:
+              type: integer
+            total_orders:
+              type: integer
+            total_revenue:
+              type: string
+            pending_orders:
+              type: integer
+            unread_messages:
+              type: integer
+        latest_users:
+          type: array
+          items:
+            $ref: "#/components/schemas/User"
+        latest_orders:
+          type: array
+          items:
+            $ref: "#/components/schemas/Order"
+        recent_messages:
+          type: array
+          items:
+            $ref: "#/components/schemas/ContactMessage"
+        monthly_users:
+          type: array
+          items:
+            type: integer
+        monthly_revenue:
+          type: array
+          items:
+            type: number
+        orders_overview:
+          type: object
+          properties:
+            pending:
+              type: integer
+            processing:
+              type: integer
+            completed:
+              type: integer
+            cancelled:
+              type: integer
+    TokenInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        last_used_at:
+          type: string
+          format: date-time
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+        is_current:
+          type: boolean
+    RegisterInput:
+      type: object
+      required: [name, email, password, password_confirmation]
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        password_confirmation:
+          type: string
+        phone:
+          type: string
+          maxLength: 20
+        gender:
+          type: string
+          enum: [male, female, other]
+        age:
+          type: integer
+          minimum: 1
+          maximum: 150
+    LoginInput:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        remember_me:
+          type: boolean
+        device_name:
+          type: string
+          maxLength: 255
+    ForgotPasswordInput:
+      type: object
+      required: [email]
+      properties:
+        email:
+          type: string
+          format: email
+    ResetPasswordInput:
+      type: object
+      required: [token, email, password, password_confirmation]
+      properties:
+        token:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        password_confirmation:
+          type: string
+    ChangePasswordInput:
+      type: object
+      required: [current_password, new_password, new_password_confirmation]
+      properties:
+        current_password:
+          type: string
+        new_password:
+          type: string
+          minLength: 8
+        new_password_confirmation:
+          type: string
+    UpdateProfileInput:
+      type: object
+      properties:
+        name:
+          type: string
+          maxLength: 255
+        email:
+          type: string
+          format: email
+        phone:
+          type: string
+          maxLength: 20
+        gender:
+          type: string
+          enum: [male, female, other]
+        age:
+          type: integer
+          minimum: 1
+          maximum: 150
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        message:
+          type: string
+        errors:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          nullable: true
+  responses:
+    UnauthorizedError:
+      description: "Access token is missing or invalid"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Unauthenticated."
+    ForbiddenError:
+      description: "User does not have admin role"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Unauthorized access."
+    ValidationError:
+      description: "Validation failed"
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+    NotFoundError:
+      description: "Resource not found"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: "Resource not found"
+security:
+  - bearerAuth: []
+paths:
+  /register:
+    post:
+      tags: [Authentication]
+      summary: "Register a new user"
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterInput"
+      responses:
+        "201":
+          description: "Registration successful"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /login:
+    post:
+      tags: [Authentication]
+      summary: "Login and get Bearer token"
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginInput"
+      responses:
+        "200":
+          description: "Login successful"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+        "429":
+          description: "Too many login attempts"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Too many login attempts. Please try again in 45 seconds."
+  /forgot-password:
+    post:
+      tags: [Authentication]
+      summary: "Send password reset link to email"
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForgotPasswordInput"
+      responses:
+        "200":
+          description: "Reset link sent"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Password reset link sent to your email"
+                  data:
+                    type: "null"
+        "400":
+          description: "Unable to send reset link"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Unable to send reset link"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /reset-password:
+    post:
+      tags: [Authentication]
+      summary: "Reset password using token from email"
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordInput"
+      responses:
+        "200":
+          description: "Password reset successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Password reset successfully"
+                  data:
+                    type: "null"
+        "400":
+          description: "Unable to reset password"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Unable to reset password"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /email/verify/{id}/{hash}:
+    get:
+      tags: [Authentication]
+      summary: "Verify email address"
+      security: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: hash
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Email verified"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Email verified successfully"
+                  data:
+                    type: "null"
+        "400":
+          description: "Invalid verification link"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Invalid verification link"
+  /user:
+    get:
+      tags: [Authentication]
+      summary: "Get authenticated user's profile"
+      responses:
+        "200":
+          description: "User profile"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/User"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+  /logout:
+    post:
+      tags: [Authentication]
+      summary: "Logout from current device"
+      responses:
+        "200":
+          description: "Logged out successfully"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Logged out successfully"
+                  data:
+                    type: "null"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+  /logout-all:
+    post:
+      tags: [Authentication]
+      summary: "Logout from all devices"
+      responses:
+        "200":
+          description: "Logged out from all devices"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Logged out from all devices"
+                  data:
+                    type: "null"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+  /change-password:
+    post:
+      tags: [Authentication]
+      summary: "Change current user's password"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordInput"
+      responses:
+        "200":
+          description: "Password changed"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Password changed successfully"
+                  data:
+                    type: "null"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /update-profile:
+    post:
+      tags: [Authentication]
+      summary: "Update user profile"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                gender:
+                  type: string
+                  enum: [male, female, other]
+                age:
+                  type: integer
+                profile_image:
+                  type: string
+                  format: binary
+      responses:
+        "200":
+          description: "Profile updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Profile updated successfully"
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/User"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /delete-account:
+    delete:
+      tags: [Authentication]
+      summary: "Delete authenticated user's account"
+      responses:
+        "200":
+          description: "Account deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Account deleted successfully"
+                  data:
+                    type: "null"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+  /refresh-token:
+    post:
+      tags: [Authentication]
+      summary: "Refresh current Bearer token"
+      responses:
+        "200":
+          description: "Token refreshed"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Token refreshed"
+                  data:
+                    type: object
+                    properties:
+                      token:
+                        type: string
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+  /tokens:
+    get:
+      tags: [Authentication]
+      summary: "List all active sessions/tokens"
+      responses:
+        "200":
+          description: "Token list"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      tokens:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/TokenInfo"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+  /tokens/{tokenId}:
+    delete:
+      tags: [Authentication]
+      summary: "Revoke a specific session token"
+      parameters:
+        - name: tokenId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Token revoked"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Token revoked successfully"
+                  data:
+                    type: "null"
+        "400":
+          description: "Cannot revoke current token"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Cannot revoke current token. Use logout instead."
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /email/verification-notification:
+    post:
+      tags: [Authentication]
+      summary: "Resend email verification link"
+      responses:
+        "200":
+          description: "Verification link sent"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Verification link sent"
+                  data:
+                    type: "null"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+  /coaches:
+    get:
+      tags: [Coaches]
+      summary: "List all coaches (public)"
+      security: []
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive]
+        - name: specialization
+          in: query
+          schema:
+            type: string
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: "Paginated list of coaches"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Coach"
+    post:
+      tags: [Coaches]
+      summary: "Create a coach (admin only)"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [full_name, job_title]
+              properties:
+                photo:
+                  type: string
+                  format: binary
+                full_name:
+                  type: string
+                job_title:
+                  type: string
+                short_description:
+                  type: string
+                long_description:
+                  type: string
+                experience:
+                  type: string
+                specialization:
+                  type: string
+                instagram_link:
+                  type: string
+                  format: uri
+                facebook_link:
+                  type: string
+                  format: uri
+                linkedin_link:
+                  type: string
+                  format: uri
+                phone:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                display_order:
+                  type: integer
+                status:
+                  type: boolean
+      responses:
+        "201":
+          description: "Coach created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Coach created successfully"
+                  data:
+                    type: object
+                    properties:
+                      coach:
+                        $ref: "#/components/schemas/Coach"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /coaches/{coach}:
+    get:
+      tags: [Coaches]
+      summary: "Get a coach by ID (public)"
+      security: []
+      parameters:
+        - name: coach
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Coach details"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      coach:
+                        $ref: "#/components/schemas/Coach"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    put:
+      tags: [Coaches]
+      summary: "Update a coach (admin only)"
+      parameters:
+        - name: coach
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                photo:
+                  type: string
+                  format: binary
+                full_name:
+                  type: string
+                job_title:
+                  type: string
+                short_description:
+                  type: string
+                long_description:
+                  type: string
+                experience:
+                  type: string
+                specialization:
+                  type: string
+                instagram_link:
+                  type: string
+                  format: uri
+                facebook_link:
+                  type: string
+                  format: uri
+                linkedin_link:
+                  type: string
+                  format: uri
+                phone:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                display_order:
+                  type: integer
+                status:
+                  type: boolean
+      responses:
+        "200":
+          description: "Coach updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Coach updated successfully"
+                  data:
+                    type: object
+                    properties:
+                      coach:
+                        $ref: "#/components/schemas/Coach"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    delete:
+      tags: [Coaches]
+      summary: "Delete a coach (admin only)"
+      parameters:
+        - name: coach
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Coach deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Coach deleted successfully"
+                  data:
+                    type: "null"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /plans:
+    get:
+      tags: [Plans]
+      summary: "List all membership plans (public)"
+      security: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive]
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: "Paginated list of plans"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Plan"
+    post:
+      tags: [Plans]
+      summary: "Create a membership plan (admin only)"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [plan_name, price, billing_period]
+              properties:
+                plan_name:
+                  type: string
+                subtitle:
+                  type: string
+                price:
+                  type: number
+                billing_period:
+                  type: string
+                description:
+                  type: string
+                button_text:
+                  type: string
+                button_url:
+                  type: string
+                badge:
+                  type: string
+                is_popular:
+                  type: boolean
+                background_color:
+                  type: string
+                status:
+                  type: boolean
+                sort_order:
+                  type: integer
+                features:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "201":
+          description: "Plan created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Plan created successfully"
+                  data:
+                    type: object
+                    properties:
+                      plan:
+                        $ref: "#/components/schemas/Plan"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /plans/{membershipPlan}:
+    get:
+      tags: [Plans]
+      summary: "Get a plan by ID (public)"
+      security: []
+      parameters:
+        - name: membershipPlan
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Plan details with features"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      plan:
+                        $ref: "#/components/schemas/Plan"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    put:
+      tags: [Plans]
+      summary: "Update a membership plan (admin only)"
+      parameters:
+        - name: membershipPlan
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plan_name:
+                  type: string
+                subtitle:
+                  type: string
+                price:
+                  type: number
+                billing_period:
+                  type: string
+                description:
+                  type: string
+                button_text:
+                  type: string
+                button_url:
+                  type: string
+                badge:
+                  type: string
+                is_popular:
+                  type: boolean
+                background_color:
+                  type: string
+                status:
+                  type: boolean
+                sort_order:
+                  type: integer
+                features:
+                  type: array
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: "Plan updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Plan updated successfully"
+                  data:
+                    type: object
+                    properties:
+                      plan:
+                        $ref: "#/components/schemas/Plan"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    delete:
+      tags: [Plans]
+      summary: "Delete a membership plan (admin only)"
+      parameters:
+        - name: membershipPlan
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Plan deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Plan deleted successfully"
+                  data:
+                    type: "null"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /products:
+    get:
+      tags: [Products]
+      summary: "List all products (public)"
+      security: []
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: category_id
+          in: query
+          schema:
+            type: integer
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive]
+        - name: stock_status
+          in: query
+          schema:
+            type: string
+            enum: [in_stock, out_of_stock]
+        - name: featured
+          in: query
+          schema:
+            type: string
+            enum: ["1", "0"]
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+        - name: sort_order
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: "Paginated list of products"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Product"
+    post:
+      tags: [Products]
+      summary: "Create a product (admin only)"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [product_name, price]
+              properties:
+                product_image:
+                  type: string
+                  format: binary
+                product_name:
+                  type: string
+                category_id:
+                  type: integer
+                description:
+                  type: string
+                short_description:
+                  type: string
+                price:
+                  type: number
+                discount_price:
+                  type: number
+                sku:
+                  type: string
+                quantity:
+                  type: integer
+                stock_status:
+                  type: string
+                  enum: [in_stock, out_of_stock]
+                is_featured:
+                  type: boolean
+                status:
+                  type: boolean
+                gallery_images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "201":
+          description: "Product created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Product created successfully"
+                  data:
+                    type: object
+                    properties:
+                      product:
+                        $ref: "#/components/schemas/Product"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /products/{product}:
+    get:
+      tags: [Products]
+      summary: "Get a product by ID (public)"
+      security: []
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Product details with category and gallery"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      product:
+                        $ref: "#/components/schemas/Product"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    put:
+      tags: [Products]
+      summary: "Update a product (admin only)"
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                product_image:
+                  type: string
+                  format: binary
+                product_name:
+                  type: string
+                category_id:
+                  type: integer
+                description:
+                  type: string
+                short_description:
+                  type: string
+                price:
+                  type: number
+                discount_price:
+                  type: number
+                sku:
+                  type: string
+                quantity:
+                  type: integer
+                stock_status:
+                  type: string
+                  enum: [in_stock, out_of_stock]
+                is_featured:
+                  type: boolean
+                status:
+                  type: boolean
+                gallery_images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "200":
+          description: "Product updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Product updated successfully"
+                  data:
+                    type: object
+                    properties:
+                      product:
+                        $ref: "#/components/schemas/Product"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    delete:
+      tags: [Products]
+      summary: "Delete a product (admin only)"
+      parameters:
+        - name: product
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Product deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Product deleted successfully"
+                  data:
+                    type: "null"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /categories:
+    get:
+      tags: [Categories]
+      summary: "List all categories (public)"
+      security: []
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive]
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: "Paginated list of categories"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Category"
+    post:
+      tags: [Categories]
+      summary: "Create a category (admin only)"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [name]
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+                status:
+                  type: boolean
+      responses:
+        "201":
+          description: "Category created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Category created successfully"
+                  data:
+                    type: object
+                    properties:
+                      category:
+                        $ref: "#/components/schemas/Category"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /categories/{category}:
+    get:
+      tags: [Categories]
+      summary: "Get a category by ID (public)"
+      security: []
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Category details with products_count"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      category:
+                        $ref: "#/components/schemas/Category"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    put:
+      tags: [Categories]
+      summary: "Update a category (admin only)"
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                slug:
+                  type: string
+                description:
+                  type: string
+                image:
+                  type: string
+                  format: binary
+                status:
+                  type: boolean
+      responses:
+        "200":
+          description: "Category updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Category updated successfully"
+                  data:
+                    type: object
+                    properties:
+                      category:
+                        $ref: "#/components/schemas/Category"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    delete:
+      tags: [Categories]
+      summary: "Delete a category (admin only)"
+      parameters:
+        - name: category
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Category deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Category deleted successfully"
+                  data:
+                    type: "null"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "409":
+          description: "Conflict - category has associated products"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Cannot delete category with associated products"
+  /orders:
+    get:
+      tags: [Orders]
+      summary: "List all orders (admin only)"
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+        - name: payment_status
+          in: query
+          schema:
+            type: string
+        - name: date_from
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: date_to
+          in: query
+          schema:
+            type: string
+            format: date
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: "Paginated list of orders"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Order"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+  /orders/{order}:
+    get:
+      tags: [Orders]
+      summary: "Get order details (admin only)"
+      parameters:
+        - name: order
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Order details with user and items"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      order:
+                        $ref: "#/components/schemas/Order"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    put:
+      tags: [Orders]
+      summary: "Update order status (admin only)"
+      parameters:
+        - name: order
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [status]
+              properties:
+                status:
+                  type: string
+                  enum: [pending, processing, completed, cancelled]
+                payment_status:
+                  type: string
+                  enum: [paid, unpaid, refunded]
+      responses:
+        "200":
+          description: "Order updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Order updated successfully"
+                  data:
+                    type: object
+                    properties:
+                      order:
+                        $ref: "#/components/schemas/Order"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /gallery:
+    get:
+      tags: [Gallery]
+      summary: "List all gallery images (public)"
+      security: []
+      parameters:
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 20
+      responses:
+        "200":
+          description: "Paginated list of gallery images"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Gallery"
+    post:
+      tags: [Gallery]
+      summary: "Upload gallery images (admin only)"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [images]
+              properties:
+                images:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                caption:
+                  type: string
+      responses:
+        "201":
+          description: "Images uploaded"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Images uploaded successfully"
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Gallery"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /gallery/{gallery}:
+    get:
+      tags: [Gallery]
+      summary: "Get a gallery image by ID (public)"
+      security: []
+      parameters:
+        - name: gallery
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Gallery image details"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/Gallery"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    delete:
+      tags: [Gallery]
+      summary: "Delete a gallery image (admin only)"
+      parameters:
+        - name: gallery
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Image deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Image deleted successfully"
+                  data:
+                    type: "null"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /testimonials:
+    get:
+      tags: [Testimonials]
+      summary: "List all testimonials (public)"
+      security: []
+      parameters:
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive]
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: "Paginated list of testimonials"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/Testimonial"
+    post:
+      tags: [Testimonials]
+      summary: "Create a testimonial (admin only)"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [customer_name, rating, review]
+              properties:
+                customer_image:
+                  type: string
+                  format: binary
+                customer_name:
+                  type: string
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                review:
+                  type: string
+                status:
+                  type: boolean
+      responses:
+        "201":
+          description: "Testimonial created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Testimonial created successfully"
+                  data:
+                    type: object
+                    properties:
+                      testimonial:
+                        $ref: "#/components/schemas/Testimonial"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /testimonials/{testimonial}:
+    get:
+      tags: [Testimonials]
+      summary: "Get a testimonial by ID (public)"
+      security: []
+      parameters:
+        - name: testimonial
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Testimonial details"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      testimonial:
+                        $ref: "#/components/schemas/Testimonial"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    put:
+      tags: [Testimonials]
+      summary: "Update a testimonial (admin only)"
+      parameters:
+        - name: testimonial
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                customer_image:
+                  type: string
+                  format: binary
+                customer_name:
+                  type: string
+                rating:
+                  type: integer
+                  minimum: 1
+                  maximum: 5
+                review:
+                  type: string
+                status:
+                  type: boolean
+      responses:
+        "200":
+          description: "Testimonial updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Testimonial updated successfully"
+                  data:
+                    type: object
+                    properties:
+                      testimonial:
+                        $ref: "#/components/schemas/Testimonial"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    delete:
+      tags: [Testimonials]
+      summary: "Delete a testimonial (admin only)"
+      parameters:
+        - name: testimonial
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Testimonial deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Testimonial deleted successfully"
+                  data:
+                    type: "null"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /messages:
+    post:
+      tags: [Contact Messages]
+      summary: "Send a contact message (public)"
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, email, message]
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                subject:
+                  type: string
+                message:
+                  type: string
+      responses:
+        "201":
+          description: "Message sent"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Message sent successfully"
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/ContactMessage"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    get:
+      tags: [Contact Messages]
+      summary: "List all contact messages (admin only)"
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: is_read
+          in: query
+          schema:
+            type: string
+            enum: ["true", "false"]
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: "Paginated list of messages"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/ContactMessage"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+  /messages/{contactMessage}:
+    get:
+      tags: [Contact Messages]
+      summary: "Get a contact message (admin only). Marks as read."
+      parameters:
+        - name: contactMessage
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Message details"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        $ref: "#/components/schemas/ContactMessage"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    delete:
+      tags: [Contact Messages]
+      summary: "Delete a contact message (admin only)"
+      parameters:
+        - name: contactMessage
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Message deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Message deleted successfully"
+                  data:
+                    type: "null"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+  /settings:
+    get:
+      tags: [Settings]
+      summary: "Get all settings (public)"
+      security: []
+      responses:
+        "200":
+          description: "All settings as key-value pairs"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        additionalProperties:
+                          type: string
+    put:
+      tags: [Settings]
+      summary: "Update settings (admin only)"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                gym_name:
+                  type: string
+                logo:
+                  type: string
+                  format: binary
+                favicon:
+                  type: string
+                  format: binary
+                email:
+                  type: string
+                  format: email
+                phone:
+                  type: string
+                address:
+                  type: string
+                facebook:
+                  type: string
+                  format: uri
+                instagram:
+                  type: string
+                  format: uri
+                tiktok:
+                  type: string
+                  format: uri
+                youtube:
+                  type: string
+                  format: uri
+                working_hours:
+                  type: string
+                currency:
+                  type: string
+                tax:
+                  type: number
+                maintenance_mode:
+                  type: boolean
+                seo_title:
+                  type: string
+                seo_description:
+                  type: string
+                seo_keywords:
+                  type: string
+      responses:
+        "200":
+          description: "Settings updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Settings updated successfully"
+                  data:
+                    type: object
+                    properties:
+                      data:
+                        type: object
+                        additionalProperties:
+                          type: string
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /dashboard:
+    get:
+      tags: [Dashboard]
+      summary: "Get admin dashboard data"
+      responses:
+        "200":
+          description: "Dashboard data with stats, charts, and latest records"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    $ref: "#/components/schemas/DashboardData"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "401":
+          $ref: "#/components/responses/UnauthorizedError"
+  /users:
+    get:
+      tags: [Users]
+      summary: "List all regular users (admin only)"
+      parameters:
+        - name: search
+          in: query
+          schema:
+            type: string
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive]
+        - name: gender
+          in: query
+          schema:
+            type: string
+            enum: [male, female, other]
+        - name: sort_by
+          in: query
+          schema:
+            type: string
+        - name: sort_order
+          in: query
+          schema:
+            type: string
+            enum: [asc, desc]
+        - name: per_page
+          in: query
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: "Paginated list of users"
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/PaginatedResponse"
+                  - type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: "#/components/schemas/User"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+    post:
+      tags: [Users]
+      summary: "Create a new user (admin only)"
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required: [name, email, password]
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                phone:
+                  type: string
+                gender:
+                  type: string
+                  enum: [male, female, other]
+                age:
+                  type: integer
+                profile_image:
+                  type: string
+                  format: binary
+                role:
+                  type: string
+                  enum: [admin, user]
+                status:
+                  type: boolean
+      responses:
+        "201":
+          description: "User created"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "User created successfully"
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/User"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+  /users/{user}:
+    get:
+      tags: [Users]
+      summary: "Get user details (admin only)"
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "User details"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "Success"
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/User"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+    put:
+      tags: [Users]
+      summary: "Update a user (admin only)"
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                phone:
+                  type: string
+                gender:
+                  type: string
+                  enum: [male, female, other]
+                age:
+                  type: integer
+                profile_image:
+                  type: string
+                  format: binary
+                role:
+                  type: string
+                  enum: [admin, user]
+                status:
+                  type: boolean
+      responses:
+        "200":
+          description: "User updated"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "User updated successfully"
+                  data:
+                    type: object
+                    properties:
+                      user:
+                        $ref: "#/components/schemas/User"
+        "403":
+          $ref: "#/components/responses/ForbiddenError"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+    delete:
+      tags: [Users]
+      summary: "Delete a user (admin only)"
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "User deleted"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: "User deleted successfully"
+                  data:
+                    type: "null"
+        "403":
+          description: "Forbidden - cannot delete admin user"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "Cannot delete admin"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+tags:
+  - name: Authentication
+    description: "Register, login, password management, email verification, token management"
+  - name: Dashboard
+    description: "Admin dashboard statistics and charts"
+  - name: Users
+    description: "User management (admin)"
+  - name: Coaches
+    description: "Coach management"
+  - name: Plans
+    description: "Membership plans"
+  - name: Products
+    description: "Product management"
+  - name: Categories
+    description: "Category management"
+  - name: Orders
+    description: "Order management (admin)"
+  - name: Gallery
+    description: "Image gallery"
+  - name: Testimonials
+    description: "Customer testimonials"
+  - name: Contact Messages
+    description: "Contact form messages"
+  - name: Settings
+    description: "Application settings"
