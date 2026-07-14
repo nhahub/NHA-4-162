@@ -1,10 +1,19 @@
 import { useOutletContext } from "react-router-dom";
 import { CartItem } from "../components/CartItem";
 import { Button } from "../App";
+import { useState } from "react";
 
 export function Cart() {
-  const { cart, showCart, setCart, handleAddToCart, handleClearCart } =
-    useOutletContext();
+  const [isCheckOutClicked, setIsCheckOutClicked] = useState(false);
+  const {
+    cart,
+    showCart,
+    setCart,
+    handleAddToCart,
+    handleClearCart,
+    logInDetails,
+  } = useOutletContext();
+
   function handleDeleteQuantity(_id) {
     setCart((cart) =>
       cart.map((i) =>
@@ -59,7 +68,30 @@ export function Cart() {
           {cart.length > 0 && (
             <h2 className="Cost">Total cost = ${cost.toFixed(2)}</h2>
           )}
-          {cart.length > 0 && <Button>Checkout</Button>}
+          {cart.length > 0 && (
+            <Button onClick={() => setIsCheckOutClicked(true)}>Checkout</Button>
+          )}
+          {isCheckOutClicked ? (
+            cart.length > 0 ? (
+              logInDetails.isLoggedIn ? (
+                <p
+                  className="Form-Errors text-success mt-3"
+                  style={{ textAlign: "center" }}
+                >
+                  Please check the link sent to your email to setup your payment
+                  method.
+                </p>
+              ) : (
+                <p className="Form-Errors mt-3" style={{ textAlign: "center" }}>
+                  You have to be logged in to be able to order.
+                </p>
+              )
+            ) : (
+              ""
+            )
+          ) : (
+            ""
+          )}
         </>
       ) : (
         ""

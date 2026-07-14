@@ -15,7 +15,7 @@ function Layout() {
     <div>
       <ScrollToTop />
       <NavBar logInDetails={logInDetails} setLogInDetails={setLogInDetails} />
-      <Outlet context={{ setLogInDetails }} />
+      <Outlet context={{ setLogInDetails, logInDetails }} />
       <Footer />
     </div>
   );

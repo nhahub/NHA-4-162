@@ -1,4 +1,9 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import {
+  Outlet,
+  useLocation,
+  useNavigate,
+  useOutletContext,
+} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Button } from "../App.jsx";
 
@@ -12,11 +17,12 @@ export function Body() {
       return [];
     }
   });
-  const [showCart, setShowCart] = useState(false);
   const [products, setProducts] = useState([]);
-  const navigate = useNavigate();
-
   const [isLoadingProducts, setIsLoadingProducts] = useState(true);
+  const { logInDetails } = useOutletContext();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const showCart = location.pathname === "/shop/cart";
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -45,10 +51,8 @@ export function Body() {
   function handleShowCart() {
     if (showCart) {
       navigate("/shop");
-      setShowCart(false);
     } else {
       navigate("/shop/cart");
-      setShowCart(true);
     }
   }
   function handleClearCart() {
@@ -85,6 +89,7 @@ export function Body() {
             handleAddToCart,
             products,
             handleClearCart,
+            logInDetails,
           }}
         />
       )}

@@ -4,6 +4,7 @@ import { useNavigate, useOutletContext } from "react-router-dom";
 
 export function SignIn() {
   const [isSignUp, setIsSignUp] = useState(false);
+  const [signUpError, setSignUpError] = useState("");
   const [value, setValue] = useState({
     name: "",
     email: "",
@@ -16,7 +17,7 @@ export function SignIn() {
       passConfirmError: "",
     },
   });
-  const { setLogInDetails } = useOutletContext();
+  const { setLogInDetails, logInDetails } = useOutletContext();
   const navigate = useNavigate();
   var regexEmail = /^([a-z]|[A-Z]){3}([a-z]|[A-Z]|[0123456789]|[-_])*@.+\.com$/;
   var regexPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
@@ -133,9 +134,7 @@ export function SignIn() {
 
     if (hasErrors) {
       return;
-    }
-
-    try {
+    } try {
       const response = await fetch(
         "https://gemdashboard-production.up.railway.app/api/login",
         {
@@ -151,12 +150,12 @@ export function SignIn() {
       const data = await response.json();
 
       if (!response.ok) {
-        console.error(data.message);
+        setSignUpError(data.message);
         return;
       }
 
       logUserIn(data);
-      navigate("/shop");
+      navigate("/");
     } catch (error) {
       console.error(error);
     }
@@ -189,9 +188,16 @@ export function SignIn() {
       const data = await response.json();
 
       if (!response.ok) {
-        console.error(data.message);
+        setSignUpError(data.message);
         return;
       }
+      setSignUpError("");
+      setValue({
+        ...value,
+        name: "",
+        passwordConfirmation: "",
+      });
+      setIsSignUp(false);
     } catch (error) {
       console.error(error);
     }
@@ -207,6 +213,7 @@ export function SignIn() {
           <>
             <input
               type="text"
+              disabled={logInDetails.isLoggedIn}
               placeholder="Name"
               name="name"
               value={value.name}
@@ -217,6 +224,7 @@ export function SignIn() {
         )}
         <input
           type="text"
+          disabled={logInDetails.isLoggedIn}
           placeholder="Email"
           name="email"
           value={value.email}
@@ -225,6 +233,7 @@ export function SignIn() {
         <span className="Form-Errors">{value.errors.emailError}</span>
         <input
           type="password"
+          disabled={logInDetails.isLoggedIn}
           placeholder="Password"
           name="password"
           value={value.password}
@@ -235,6 +244,7 @@ export function SignIn() {
           <>
             <input
               type="password"
+              disabled={logInDetails.isLoggedIn}
               placeholder="Confirm Password"
               name="passwordConfirmation"
               value={value.passwordConfirmation}
@@ -253,13 +263,28 @@ export function SignIn() {
         </Button>
         {isSubmitDisabled ? (
           <span className="Form-Errors">Can not submit fix errors first</span>
+        ) : signUpError ? (
+          <span className="Form-Errors">{signUpError}</span>
+        ) : logInDetails.isLoggedIn ? (
+          <span className="Form-Errors text-success">
+            You are already logged in, sign out to add a new account
+          </span>
         ) : (
           ""
         )}
       </div>
       <p
         className="Sign-Up-Link"
-        onClick={() => setIsSignUp((prev) => !prev)}
+        onClick={() => { setIsSignUp((prev) => !prev);
+          setSignUpError("");
+          setValue({
+            ...value,
+            name: "",
+            email: "",
+            password: "",
+            passwordConfirmation: "",
+          });
+        }}
         style={{ cursor: "pointer" }}
       >
         {isSignUp ? "Already a member? Sign in" : "New here? Sign up"}
